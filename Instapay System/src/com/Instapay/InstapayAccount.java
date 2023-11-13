@@ -10,13 +10,13 @@ public abstract class InstapayAccount {
     private String userName;
     private String password;
     private String mobileNumber;
-    private float balance;
+    private double balance;
     private List<Bills> bills;
 
     //------------------------------------------------------------------------------------------------------------------
 
     // Constructor
-    protected InstapayAccount(String userName, String password, String mobileNumber, float balance){
+    protected InstapayAccount(String userName, String password, String mobileNumber, double balance){
         this.userName = userName;
         this.password = password;
         this.mobileNumber = mobileNumber;
@@ -41,7 +41,7 @@ public abstract class InstapayAccount {
         this.mobileNumber = mobileNumber;
     }
 
-    public void setBalance(float balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
@@ -64,7 +64,7 @@ public abstract class InstapayAccount {
         return mobileNumber;
     }
 
-    public float getBalance() {
+    public double getBalance() {
         return balance;
     }
 
@@ -141,5 +141,6 @@ public abstract class InstapayAccount {
     }
 
     //----------------------------------------------------------------
+
 
 }

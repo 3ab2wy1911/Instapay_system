@@ -1,12 +1,8 @@
 package com.Instapay;
 
-import com.Instapay.Banks.BankApi;
-import com.Instapay.Banks.CIB;
-import com.Instapay.Banks.QNB;
-import com.Instapay.Bills.Bills;
-import com.Instapay.Bills.ElectricityBill;
-import com.Instapay.Bills.GasBill;
-import com.Instapay.Bills.WaterBill;
+import com.Instapay.Banks.*;
+import com.Instapay.Bills.*;
+import com.Instapay.Wallets.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +12,7 @@ public class Database {
     private static  String [] numbers = new String[]{};
     private static    Bills [] bills = new Bills[]{};
     private static BankApi[] banks = new BankApi[]{};
+    private static WalletApi[] wallets = new WalletApi[]{};
     private static List<InstapayAccount> instapayAccounts = new ArrayList<>();
     public static Scanner scanner = new Scanner (System.in);
 
@@ -27,6 +24,8 @@ public class Database {
         new GasBill("Gas","Faisel ST.",2,150,"01095454010"),
         new WaterBill("Water","Faisel ST.",3,140,"01095454010")};
         banks = new BankApi[] {new CIB("Commercial International Bank" ,1), new QNB("Qatar National Bank", 2)};
+        wallets = new WalletApi[] {new TeldaWallet("Banque du Caire Wallet",1 ), new VodafoneCash("Vodafone Cash", 2), new Fawry("Fawry Wallet", 3)};
+
     }
 
     //----------------------------------------------------------------

@@ -13,7 +13,7 @@ public class BankAccount extends InstapayAccount {
         this.bank = bank;
     }
 
-    public BankAccount(String userName, String password, String mobileNumber, float balance, int id) {
+    public BankAccount(String userName, String password, String mobileNumber, double balance, int id) {
         super(userName, password, mobileNumber, balance);
     }
 
@@ -22,11 +22,11 @@ public class BankAccount extends InstapayAccount {
 
     }
 
-    public void updateBankAccount(String mobileNumber){
-        BankAccount account = bank.getAccount(mobileNumber);
-        setUserName(account.getUserName());
+    public void updateBankAccount(String userName){ // used in sign in.
+        BankAccount account = bank.getAccount(userName);
+        setUserName(userName);
         setPassword(account.getPassword());
         setBalance(account.getBalance());
-        setMobileNumber(mobileNumber);
+        setMobileNumber(account.getMobileNumber());
     }
 }

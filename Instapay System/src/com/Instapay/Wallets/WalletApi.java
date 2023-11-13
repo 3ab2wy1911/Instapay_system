@@ -1,24 +1,25 @@
-package com.Instapay.Banks;
+package com.Instapay.Wallets;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BankApi{
-
-    // Common Attributes
+public abstract class WalletApi {
     private String name;
     private int id;
-    private static List<BankAccount> accounts;
-
+    private List<WalletAccount> accounts;
 
     //------------------------------------------------------------------------------------------------------------------
 
-    public BankApi(String name, int id ){
+    // Constructor
+
+    WalletApi(String name, int id){
+
         this.name = name;
         this.id = id;
-        accounts  = new ArrayList<BankAccount>(){};
+        accounts = new ArrayList<>(){};
     }
-    // Setters
+
+    // Getters
     public void setName(String name) {
         this.name = name;
     }
@@ -27,13 +28,13 @@ public abstract class BankApi{
         this.id = id;
     }
 
-    public void setAccounts(List<BankAccount> accounts) {
+    public void setAccounts(List<WalletAccount> accounts) {
         this.accounts = accounts;
     }
 
-    //------------------------------------
+    //----------------------------------------------------------------
 
-    // Getters
+    // Setters
     public String getName() {
         return name;
     }
@@ -42,14 +43,13 @@ public abstract class BankApi{
         return id;
     }
 
-    public List<BankAccount> getAccounts() {
+    public List<WalletAccount> getAccounts() {
         return accounts;
     }
 
-    //------------------------------------
-
-    public BankAccount getAccount(String userName){
-        for (BankAccount account : accounts){
+    //-----------------------------------------------------------------
+    public WalletAccount getAccount(String userName){
+        for (WalletAccount account : accounts){
             if (account.getMobileNumber().equals(userName)){
                 return account;
             }
@@ -58,8 +58,7 @@ public abstract class BankApi{
     }
 
     //------------------------------------
-
-    public void addAccount(BankAccount account){
+    public void addAccount(WalletAccount account){
         accounts.add(account);
     }
 
