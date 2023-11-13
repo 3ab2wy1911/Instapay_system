@@ -1,3 +1,5 @@
+package com.Instapay;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -5,7 +7,7 @@ import java.util.Scanner;
 public class Database {
     private static  String [] numbers = new String[]{};
     private static  Bills [] bills = new Bills[]{};
-    private static List<InstapayAccount> instapayAccounts = new ArrayList<InstapayAccount>();
+    private static List<InstapayAccount> instapayAccounts = new ArrayList<>();
     public static Scanner scanner = new Scanner (System.in);
 
     //------------------------------------------------------------------------------------------------------------------

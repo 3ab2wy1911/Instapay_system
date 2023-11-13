@@ -1,3 +1,5 @@
+package com.Instapay;
+
 import java.util.List;
 
 public abstract class InstapayAccount {
@@ -99,7 +101,7 @@ public abstract class InstapayAccount {
         System.out.println("UserName : " + this.userName);
         System.out.println("Mobile Number : " + this.mobileNumber);
         System.out.println("Balance : " + this.balance);
-        System.out.println("--------------------------------  Bills --------------------------------");
+        System.out.println("--------------------------------  com.Instapay.Bills --------------------------------");
         if (bills!=null){
             for (Bills bill : bills){
                 bill.print();

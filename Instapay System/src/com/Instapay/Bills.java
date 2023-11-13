@@ -1,3 +1,5 @@
+package com.Instapay;
+
 public class Bills {
 
     // Content of the bill.
