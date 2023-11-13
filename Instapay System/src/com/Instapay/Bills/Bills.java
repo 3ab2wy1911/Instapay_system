@@ -1,6 +1,6 @@
-package com.Instapay;
+package com.Instapay.Bills;
 
-public class Bills {
+public abstract class Bills {
 
     // Content of the bill.
     private String name;
@@ -73,6 +73,7 @@ public class Bills {
         System.out.println("Bill Name : " + this.name );
         System.out.println("Address : " + this.address);
         System.out.println("Amount : " + this.amount);
+        System.out.println("______________________________________________");
     }
 
     //____________________________________________________________________

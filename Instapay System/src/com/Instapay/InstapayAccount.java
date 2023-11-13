@@ -1,5 +1,7 @@
 package com.Instapay;
 
+import com.Instapay.Bills.Bills;
+
 import java.util.List;
 
 public abstract class InstapayAccount {
@@ -14,13 +16,15 @@ public abstract class InstapayAccount {
     //------------------------------------------------------------------------------------------------------------------
 
     // Constructor
-    InstapayAccount(String userName, String password, String mobileNumber,float balance){
+    protected InstapayAccount(String userName, String password, String mobileNumber, float balance){
         this.userName = userName;
         this.password = password;
         this.mobileNumber = mobileNumber;
         this.balance = balance;
         setBills(mobileNumber);
     }
+
+    protected InstapayAccount(){}
 
     //----------------------------------------------------------------
 
@@ -101,7 +105,7 @@ public abstract class InstapayAccount {
         System.out.println("UserName : " + this.userName);
         System.out.println("Mobile Number : " + this.mobileNumber);
         System.out.println("Balance : " + this.balance);
-        System.out.println("--------------------------------  com.Instapay.Bills --------------------------------");
+        System.out.println("--------------------------------  com.Instapay.Bills.Bills --------------------------------");
         if (bills!=null){
             for (Bills bill : bills){
                 bill.print();
