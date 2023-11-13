@@ -1,4 +1,4 @@
 package com.Instapay;
 
-public class VodafoneCash {
+public class VodafoneCash extends TelecomProvider{
 }

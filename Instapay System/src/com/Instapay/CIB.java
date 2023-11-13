@@ -1,4 +1,4 @@
 package com.Instapay;
 
-public class CIB {
+public class CIB extends BankApi{
 }

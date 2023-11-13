@@ -1,4 +1,4 @@
 package com.Instapay;
 
-public class Fawry {
+public class Fawry extends PaymentCompanyProvider{
 }

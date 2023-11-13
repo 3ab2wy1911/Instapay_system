@@ -1,4 +1,4 @@
 package com.Instapay;
 
-public class PaymentCompanyProvider {
+public abstract class PaymentCompanyProvider extends WalletApi{
 }
