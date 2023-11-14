@@ -123,6 +123,18 @@ public abstract class InstapayAccount {
 
     //----------------------------------------------------------------
 
+    public void showAccounts() {
+        System.out.println("accounts exist are : ");
+        for (InstapayAccount account : getInstapayAccounts()) {
+            System.out.println("username : "+account.userName);
+            System.out.println("Password : "+account.password);
+            System.out.println();
+        }
+    }
+
+
+    //----------------------------------------------------------------
+
     public void updateBalance(float newBalance) {
         this.balance = newBalance;
     }
