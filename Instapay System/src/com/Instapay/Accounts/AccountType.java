@@ -14,7 +14,12 @@ public abstract class AccountType {
         this.mobileNumber = mobileNumber;
         this.balance = balance;
     }
-//----------------------------------------------------------------------------------------------------------------------
+
+    public AccountType() {
+
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------
     protected void updateBalance(double balance){
         this.balance = balance;
     }

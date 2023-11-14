@@ -1,9 +1,13 @@
 package com.Instapay.Accounts.Banks;
-import com.Instapay.*;
 import com.Instapay.Accounts.AccountType;
+import com.Instapay.Manager.Database;
 
 public class BankAccount extends AccountType {
     BankApi bank;
+
+    public BankAccount() {
+        super();
+    }
 
     public BankApi getBank(int id ) {
         return bank;

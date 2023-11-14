@@ -1,7 +1,7 @@
 package com.Instapay.Accounts.Wallets;
 
 import com.Instapay.Accounts.AccountType;
-import com.Instapay.Database;
+import com.Instapay.Manager.Database;
 
 public class WalletAccount extends AccountType {
     public WalletApi provider;
@@ -10,4 +10,7 @@ public class WalletAccount extends AccountType {
         this.provider = Database.getWallets(id);
     }
 
+    public WalletAccount() {
+
+    }
 }

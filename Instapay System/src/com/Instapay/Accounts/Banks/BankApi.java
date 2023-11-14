@@ -3,14 +3,12 @@ package com.Instapay.Accounts.Banks;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BankApi{
-
-    // Common Attributes
+public abstract class BankApi {
+    // common Attributes
     private String name;
+
     private int id;
     private static List<BankAccount> accounts;
-
-
     //------------------------------------------------------------------------------------------------------------------
 
     public BankApi(String name, int id ){
@@ -62,5 +60,4 @@ public abstract class BankApi{
     public void addAccount(BankAccount account){
         accounts.add(account);
     }
-
 }
