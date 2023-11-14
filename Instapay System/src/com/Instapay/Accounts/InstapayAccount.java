@@ -196,13 +196,15 @@ public class InstapayAccount {
     public void signIn(){
         System.out.println("--------------------------------Login--------------------------------");
         System.out.println("Enter user name:");
-        String userName = scanner.nextLine();
+//        scanner.nextLine();
+        String userName = scanner.next();
 
         for (InstapayAccount account : getInstapayAccounts()) {
             if (userName.equals(account.getUserName())) {
                 System.out.println("UserName found.");
 
                 System.out.println("Enter user Password:");
+                scanner.nextLine();
                 String password = scanner.nextLine();
 
                 if (password.equals(account.getPassword())) {
@@ -251,16 +253,6 @@ public class InstapayAccount {
         System.out.println("UserName : " + this.userName);
         System.out.println("Mobile Number : " + this.mobileNumber);
         System.out.println("Balance : " + this.balance);
-        System.out.println("--------------------------------  com.Instapay.Bills.Bills --------------------------------");
-        if (bills!=null){
-            for (Bills bill : bills){
-                bill.print();
-                System.out.println("----------------------------------------------------");
-            }
-        }
-        else {
-            System.out.println("No bills available");
-        }
     }
 
     //----------------------------------------------------------------

@@ -1,5 +1,6 @@
 
 import com.Instapay.Accounts.InstapayAccount;
+import com.Instapay.Manager.Manager;
 
 
 public class Main {
@@ -41,9 +42,11 @@ public class Main {
 //        d.printInstas("0121212");
 //        //wapiFawry.printAccounts();
 
-        InstapayAccount i = new InstapayAccount ();
-        i.register();
+//        InstapayAccount i = new InstapayAccount ();
+//        i.register();
 //        Database d = new Database();
+        Manager manager = new Manager();
+        manager.startApplication();
     }
 
 }
