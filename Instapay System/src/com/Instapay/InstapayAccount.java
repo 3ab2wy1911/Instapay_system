@@ -3,10 +3,12 @@ package com.Instapay;
 import com.Instapay.Banks.BankAccount;
 import com.Instapay.Bills.Bills;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 import static com.Instapay.Database.getInstapayAccounts;
+import static com.Instapay.Database.scanner;
 
 public abstract class InstapayAccount {
 
@@ -135,7 +137,7 @@ public abstract class InstapayAccount {
 
     //----------------------------------------------------------------
 
-    public void updateBalance(float newBalance) {
+    public void updateBalance(double newBalance) {
         this.balance = newBalance;
     }
 
@@ -166,20 +168,66 @@ public abstract class InstapayAccount {
 
     //----------------------------------------------------------------
 
-    public void payBill(){
-        if (bills == null){
-            System.out.println("No available bills");
-            return;
+    public void payBill() {
+        Database fdf = new Database();
+        this.setBills(this.getMobileNumber());
+        boolean flag = true;
+        while (flag)                                   // to reuse this function
+        {
+            if (bills == null || bills.isEmpty()) {                      //to check if there is no bill to pay
+                System.out.println("No available bills");
+                return;
+            }
+
+
+
+            System.out.println("Here are your Bills");
+
+            for (Bills bill : bills) {               //to show all the user bills
+                bill.print();
+            }
+
+            System.out.println("Enter the id of the bill you want to pay?");
+            int choice = scanner.nextInt();
+
+            Iterator<Bills> iterator = bills.iterator();   // looping by iterator to reach our selected bill
+            while (iterator.hasNext()) {
+                Bills bill = iterator.next();
+                if (bill.getId() == choice) {              // catching user selected bill
+                    if (bill.getAmount() > this.getBalance()) {       // checking balance validation
+                        System.out.println("Cannot pay this bill because your balance is less than the bill amount");
+                    } else {
+                        this.updateBalance(this.getBalance() - bill.getAmount()); // updating balance after paying
+                        iterator.remove(); // Remove the bill from the list
+
+                        System.out.println(bill.getName() +" Bill has been paid successfully. Your current balance: " + this.getBalance());
+                    }
+                }
+            }
+
+
+            for (Bills bill : bills) {         // Print the remaining bills after payment
+                bill.print();
+            }
+            System.out.println("Press 1 to pay another bill or press 2 to exit:");
+            int again = scanner.nextInt();
+
+            if (again == 1) {
+                flag= true;
+            } else if (again  == 2) {
+                flag = false;
+
+                System.out.println("Exiting the payBill function. Goodbye!");           // Exit the function
+            } else {
+                flag = false;
+                System.out.println("Invalid choice. Exiting PayBill function");         // Handle invalid input
+            }
         }
 
-        for (Bills bill : bills){
-            bill.print();
-        }
 
-        System.out.println("Enter the id of the bill you want to pay?");
-//        int choice = scanner.nextInt();
-//        System.out.println();
+
     }
+
 
     //----------------------------------------------------------------
 
