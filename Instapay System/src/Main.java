@@ -1,7 +1,4 @@
-import com.Instapay.Banks.BankAccount;
 import com.Instapay.Database;
-import com.Instapay.InstapayAccount;
-import com.Instapay.Wallets.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,9 +11,9 @@ public class Main {
 //        bankAccount.signIn();
 
 
-        InstapayAccount n = new WalletAccount("username", "password", "01095454010", 1000.0);
+//        InstapayAccount n = new WalletAccount("username", "password", "01095454010", 1000.0);
 
-        n.payBill();
+//        n.payBill();
 
 
     }

@@ -1,8 +1,8 @@
-package com.Instapay.Banks;
+package com.Instapay.Accounts.Banks;
+import com.Instapay.*;
+import com.Instapay.Accounts.AccountType;
 
-import com.Instapay.InstapayAccount;
-
-public class BankAccount extends InstapayAccount {
+public class BankAccount extends AccountType {
     BankApi bank;
 
     public BankApi getBank(int id ) {
@@ -13,16 +13,13 @@ public class BankAccount extends InstapayAccount {
         this.bank = bank;
     }
 
-    public BankAccount(String userName, String password, String mobileNumber, double balance, int id) {
+    public BankAccount(String userName, String password, String mobileNumber, double balance,int id) {
         super(userName, password, mobileNumber, balance);
+        this.bank = Database.getBank(id);
     }
 
-    public BankAccount() {
-        super();
 
-    }
-
-    public void updateBankAccount(String userName){ // used in sign in.
+    public void updateBankAccount(String userName){ // If we don't use it then just fuckin delete it.
         BankAccount account = bank.getAccount(userName);
         setUserName(userName);
         setPassword(account.getPassword());

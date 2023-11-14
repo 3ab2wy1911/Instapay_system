@@ -1,6 +1,6 @@
 package com.Instapay;
 
-import com.Instapay.Banks.BankAccount;
+import com.Instapay.Accounts.AccountType;
 import com.Instapay.Bills.Bills;
 
 import java.util.Iterator;
@@ -10,13 +10,14 @@ import java.util.Scanner;
 import static com.Instapay.Database.getInstapayAccounts;
 import static com.Instapay.Database.scanner;
 
-public abstract class InstapayAccount {
+public class InstapayAccount {
 
     // Common Attributes
     private String userName;
     private String password;
     private String mobileNumber;
     private double balance;
+    private AccountType account;
     private List<Bills> bills;
 
     //------------------------------------------------------------------------------------------------------------------
@@ -166,10 +167,8 @@ public abstract class InstapayAccount {
     //----------------------------------------------------------------
 
     public void payBill() {
-        Database fdf = new Database();
         this.setBills(this.getMobileNumber());
         boolean flag = true;
-        int counter = 0;
         while (flag)                                   // to reuse this function
         {
             if (bills == null || bills.isEmpty()) {                      //to check if there is no bill to pay
@@ -199,15 +198,9 @@ public abstract class InstapayAccount {
                         iterator.remove(); // Remove the bill from the list
 
                         System.out.println(bill.getName() +" Bill has been paid successfully. Your current balance: " + this.getBalance());
-                    }}
-                else
-                    {
-                        counter++;
                     }
-
+                }
             }
-//            if (counter > bills.size())
-//            { System.out.println("Unknown ID please try again" );}
             for (Bills bill : bills) {         // Print the remaining bills after payment
                 bill.print();
             }
@@ -216,11 +209,13 @@ public abstract class InstapayAccount {
 
             if (again == 1) {
                 flag= true;
-            } else if (again  == 2) {
+            }
+            else if (again  == 2) {
                 flag = false;
 
                 System.out.println("Exiting the payBill function. Goodbye!");           // Exit the function
-            } else {
+            }
+            else {
                 flag = false;
                 System.out.println("Invalid choice. Exiting PayBill function");         // Handle invalid input
             }

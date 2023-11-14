@@ -1,4 +1,4 @@
-package com.Instapay.Banks;
+package com.Instapay.Accounts.Banks;
 
 import java.util.ArrayList;
 import java.util.List;

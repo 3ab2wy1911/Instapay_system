@@ -1,4 +1,4 @@
-package com.Instapay.Wallets;
+package com.Instapay.Accounts.Wallets;
 
 import java.util.ArrayList;
 import java.util.List;

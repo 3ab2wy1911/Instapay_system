@@ -1,4 +1,4 @@
-package com.Instapay.Banks;
+package com.Instapay.Accounts.Banks;
 
 public class QNB extends BankApi{
     public QNB(String name, int id) {

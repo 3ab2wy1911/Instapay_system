@@ -1,6 +1,4 @@
-package com.Instapay.Wallets;
-
-import com.Instapay.Wallets.WalletApi;
+package com.Instapay.Accounts.Wallets;
 
 public abstract class PaymentCompanyProvider extends WalletApi {
     PaymentCompanyProvider(String name, int id) {

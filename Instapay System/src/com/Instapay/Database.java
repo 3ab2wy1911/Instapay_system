@@ -1,8 +1,8 @@
 package com.Instapay;
 
-import com.Instapay.Banks.*;
+import com.Instapay.Accounts.Banks.*;
 import com.Instapay.Bills.*;
-import com.Instapay.Wallets.*;
+import com.Instapay.Accounts.Wallets.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +27,10 @@ public class Database {
         wallets = new WalletApi[] {new TeldaWallet("Banque du Caire Wallet",1 ), new VodafoneCash("Vodafone Cash", 2), new Fawry("Fawry Wallet", 3)};
 
 //        dummy accounts added in instapayAccounts list
-        instapayAccounts.add(new BankAccount("mohamed ahmed riyad","reyad123456789","01157157114",60122,7));
-        instapayAccounts.add(new BankAccount("ahmed shaban youssef","shaban123456789","01157157114",60122,12));
-        instapayAccounts.add(new WalletAccount("mohamed ahmed abdelqawy","abqawy123456789","01157157114",60122));
-        instapayAccounts.add(new WalletAccount("omar mohmaed fayek","omar123456789","01157157114",60122));
+        instapayAccounts.add(new InstapayAccount("mohamed ahmed riyad","reyad123456789","01157157114",60122));
+        instapayAccounts.add(new InstapayAccount("ahmed shaban youssef","shaban123456789","01157157114",60122));
+        instapayAccounts.add(new InstapayAccount("mohamed ahmed abdelqawy","abqawy123456789","01157157114",60122));
+        instapayAccounts.add(new InstapayAccount("omar mohmaed fayek","omar123456789","01157157114",60122));
 
     }
 
@@ -81,5 +81,24 @@ public class Database {
 
     //----------------------------------------------------------------
 
+    public static BankApi getBank(int id){
+        for (BankApi bank : banks){
+            if (bank.getId() == id){
+                return bank;
+            }
+        }
+        return null;
+    }
+
+    //----------------------------------------------------------------
+
+    public static WalletApi getWallets(int id){
+        for (WalletApi wallet : wallets){
+            if (wallet.getId() == id){
+                return wallet;
+            }
+        }
+        return null;
+    }
 
 }

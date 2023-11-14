@@ -1,4 +1,4 @@
-package com.Instapay.Banks;
+package com.Instapay.Accounts.Banks;
 
 public class CIB extends BankApi{
     public CIB(String name, int id) {
