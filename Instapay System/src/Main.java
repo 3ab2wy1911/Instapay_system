@@ -23,6 +23,8 @@ public class Main {
         wapi.addAccount(new WalletAccount("sh3boo", "123465", "01222222222", 2000.0, 3));
         wapi.addAccount(new WalletAccount("mohamed", "123465", "01111111111", 1000.0, 3));
         wapi.addAccount(new WalletAccount("reyad", "123465", "03333333333", 1000.0, 2));
+        wapi.addAccount(new WalletAccount("elramly", "123465", "04444444444", 1000.0, 2));
+        wapi.addAccount(new WalletAccount("elramly", "123465", "05555555555", 1000.0, 1));
         InstapayAccount insacc = new InstapayAccount("omar", "123465", "01550033327", 1000.0);
         insacc.setApi(wapi);
         insacc.transfer();

@@ -164,61 +164,127 @@ public class InstapayAccount {
     }
 
     //----------------------------------------------------------------
+    public void transferToPayment(String mobileNumber){
+        int choice;
+        Scanner input = new Scanner(System.in);
+        System.out.println("(1) Fawry");
+        choice = input.nextInt();
+        if (choice > 1 || choice <= 0) {
+            System.out.println("invalid choice");
+            return;
+        }
+        if (choice == 1) {
+            // id 3 for fawry
+            if (walletapi.searchForNumber(mobileNumber, 3)) {
+                Double amount;
+                System.out.println("Enter Amount: ");
+                amount = input.nextDouble();
+                if (amount <= getBalance()) {
+                    balance -= amount; // edit the sender balance
+                    WalletAccount wacc = walletapi.getAccountWithNumber(mobileNumber); // get the account of the receiver through api
+                    wacc.setBalance(wacc.getBalance() + amount); // to update the receiver balance
+                } else {
+                    System.out.println("Insufficient Balance!");
+                    return;
+                }
+            } else {
+                // mobile number is not found
+                System.out.println("Mobile Number not found!");
+                return;
+            }
+        }
 
-    public void transfer(){
+    }
+    public void transferToTelecomComp(String mobileNumber){
+        int choice;
+        Scanner input = new Scanner(System.in);
+        System.out.println("(1) Vodafone Cash");
+        choice = input.nextInt();
+        if (choice > 1 || choice <= 0) {
+            System.out.println("invalid choice");
+            return;
+        }
+        if (choice == 1) {
+            // id 2 for vodafone cash
+            if (walletapi.searchForNumber(mobileNumber, 2)) {
+                Double amount;
+                System.out.println("Enter Amount: ");
+                amount = input.nextDouble();
+                if (amount <= getBalance()) {
+                    balance -= amount; // edit the sender balance
+                    WalletAccount wacc = walletapi.getAccountWithNumber(mobileNumber); // get the account of the receiver through api
+                    wacc.setBalance(wacc.getBalance() + amount); // to update the receiver balance
+                } else {
+                    System.out.println("Insufficient Balance!");
+                    return;
+                }
+            } else {
+                // mobile number is not found
+                System.out.println("Mobile Number not found!");
+                return;
+            }
+        }
+    }
+    public void transferToBankWallet(String mobileNumber){
+        int choice;
+        Scanner input = new Scanner(System.in);
+        System.out.println("(1) Telda");
+        choice = input.nextInt();
+        if (choice > 1 || choice <= 0) {
+            System.out.println("invalid choice");
+            return;
+        }
+        if (choice == 1) {
+            // id 1 for Telda
+            if (walletapi.searchForNumber(mobileNumber, 1)) {
+                Double amount;
+                System.out.println("Enter Amount: ");
+                amount = input.nextDouble();
+                if (amount <= getBalance()) {
+                    balance -= amount; // edit the sender balance
+                    WalletAccount wacc = walletapi.getAccountWithNumber(mobileNumber); // get the account of the receiver through api
+                    wacc.setBalance(wacc.getBalance() + amount); // to update the receiver balance
+                } else {
+                    System.out.println("Insufficient Balance!");
+                    return;
+                }
+            } else {
+                // mobile number is not found
+                System.out.println("Mobile Number not found!");
+                return;
+            }
+        }
+    }
+
+    public void transfer() {
         int choice;
         System.out.println("(1) Transfer to a wallet\n(2) Transfer to bank account");
         Scanner input = new Scanner(System.in);
         choice = input.nextInt();
         // if choice to send to a wallet whether it was a payment companies or bank
         // and to send you have to enter the wallet number and check if it has a wallet
-        if (choice == 1){
+        if (choice == 1) {
             String mobileNumber;
             System.out.println("Please Select Wallet Providers:- ");
             System.out.println("(1) Electronic Payment Companies ie: Fawry");
             System.out.println("(2) Telecommunication Companies ie:Vodafone Cash");
             System.out.println("(3) Bank Wallets");
             choice = input.nextInt();
-            if (choice > 3 || choice <= 0){
+            if (choice > 3 || choice <= 0) {
                 System.out.println("invalid choice");
                 return;
             }
             System.out.println("Please enter mobile number");
             mobileNumber = input.next();
-            if (choice == 1){
-                System.out.println("(1) Fawry");
-                choice = input.nextInt();
-                if (choice > 1 || choice <= 0){
-                    System.out.println("invalid choice");
-                    return;
-                }
-                if (choice == 1){
-                    // id 3 for fawry
-                    if(walletapi.searchForNumber(mobileNumber, 3)){
-                        Double amount;
-                        System.out.println("Enter Amount: ");
-                        amount = input.nextDouble();
-                        if (amount <= getBalance()){
-                            balance -= amount; // edit the sender balance
-                            WalletAccount wacc = walletapi.getAccountWithNumber(mobileNumber); // get the account of the receiver through api
-                            wacc.setBalance(wacc.getBalance() + amount); // to update the receiver balance
-                        }
-                        else {
-                            System.out.println("Insufficient Balance!");
-                            return;
-                        }
-                    }
-                    else {
-                        // mobile number is not found
-                        System.out.println("Mobile Number not found!");
-                        return;
-                    }
-                }
-
+            if (choice == 1) {
+                transferToPayment(mobileNumber);
+            } else if (choice == 2) {
+                transferToTelecomComp(mobileNumber);
+            } else if (choice == 3) {
+                transferToBankWallet(mobileNumber);
             }
 
         }
-
     }
 
     //----------------------------------------------------------------
