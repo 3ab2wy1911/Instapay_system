@@ -19,7 +19,9 @@ public class Main {
     //        InstapayAccount n = new WalletAccount("username", "password", "01095454010", 1000.0);
 
     //        n.payBill();
-        WalletApi wapi = new Fawry("Fawry", 1);
+
+
+        WalletApi wapi = d.getWallets(1); // gives me the account list of the api belongs to fawry
         wapi.addAccount(new WalletAccount("sh3boo", "123465", "01222222222", 2000.0, 3));
         wapi.addAccount(new WalletAccount("mohamed", "123465", "01111111111", 1000.0, 3));
         wapi.addAccount(new WalletAccount("reyad", "123465", "03333333333", 1000.0, 2));
