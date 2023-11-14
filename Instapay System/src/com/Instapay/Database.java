@@ -25,6 +25,14 @@ public class Database {
         new WaterBill("Water","Faisel ST.",3,140,"01095454010")};
         banks = new BankApi[] {new CIB("Commercial International Bank" ,1), new QNB("Qatar National Bank", 2)};
         wallets = new WalletApi[] {new TeldaWallet("Banque du Caire Wallet",1 ), new VodafoneCash("Vodafone Cash", 2), new Fawry("Fawry Wallet", 3)};
+//        String userName, String password, String mobileNumber, double balance
+
+
+//        dummy accounts added in instapayAccounts list
+        instapayAccounts.add(new BankAccount("mohamed ahmed riyad","reyad123456789","01157157114",60122,7));
+        instapayAccounts.add(new BankAccount("ahmed shaban youssef","shaban123456789","01157157114",60122,12));
+        instapayAccounts.add(new WalletAccount("mohamed ahmed abdelqawy","abqawy123456789","01157157114",60122));
+        instapayAccounts.add(new WalletAccount("omar mohmaed fayek","omar123456789","01157157114",60122));
 
     }
 

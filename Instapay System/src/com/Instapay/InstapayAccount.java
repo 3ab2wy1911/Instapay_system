@@ -1,8 +1,12 @@
 package com.Instapay;
 
+import com.Instapay.Banks.BankAccount;
 import com.Instapay.Bills.Bills;
 
 import java.util.List;
+import java.util.Scanner;
+
+import static com.Instapay.Database.getInstapayAccounts;
 
 public abstract class InstapayAccount {
 
