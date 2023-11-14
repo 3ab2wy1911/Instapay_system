@@ -108,4 +108,18 @@ public class Database {
         }
         return false;
     }
+    public InstapayAccount getInstaPayAccountByMobNumber(String mobileNumber){
+        for (InstapayAccount account : instapayAccounts){
+            if (account.getUserName().equals(mobileNumber))
+                return account;
+        }
+        return null;
+    }
+    public InstapayAccount getInstaPayAccountByUserName(String userName){
+        for (InstapayAccount account : instapayAccounts){
+            if (account.getUserName().equals(userName))
+                return account;
+        }
+        return null;
+    }
 }
