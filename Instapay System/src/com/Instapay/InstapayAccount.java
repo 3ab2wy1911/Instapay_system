@@ -97,34 +97,31 @@ public abstract class InstapayAccount {
         System.out.println("Enter user name:");
         String userName = scanner.nextLine();
 
-        System.out.println("Enter user Password:");
-        String password = scanner.nextLine();
-
         for (InstapayAccount account : getInstapayAccounts()) {
-            if (userName.equals(account.userName)){
-                System.out.println("user name found ");
-                if (password.equals(account.password)){
-                    System.out.println("password matches user name, welcome:)");
-                    return;
-                }
+            if (userName.equals(account.getUserName())) {
+                System.out.println("UserName found.");
 
-                else {
-                    System.out.println("password is not correct");
+                System.out.println("Enter user Password:");
+                String password = scanner.nextLine();
+
+                if (password.equals(account.getPassword())) {
+                    System.out.println("Password matches user name. Welcome :)");
+                    return;
+                } else {
+                    System.out.println("Incorrect password.");
                     return;
                 }
-            }
-            else {
-                System.out.println("UserName not found");
-                return;
             }
         }
+
+        System.out.println("UserName not found.");
     }
 
 
     //----------------------------------------------------------------
 
     public void showAccounts() {
-        System.out.println("accounts exist are : ");
+        System.out.println("accounts exist are : \n");
         for (InstapayAccount account : getInstapayAccounts()) {
             System.out.println("username : "+account.userName);
             System.out.println("Password : "+account.password);
