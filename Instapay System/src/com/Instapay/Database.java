@@ -31,6 +31,7 @@ public class Database {
         instapayAccounts.add(new InstapayAccount("ahmed shaban youssef","shaban123456789","01157157114",60122));
         instapayAccounts.add(new InstapayAccount("mohamed ahmed abdelqawy","abqawy123456789","01157157114",60122));
         instapayAccounts.add(new InstapayAccount("omar mohmaed fayek","omar123456789","01157157114",60122));
+        instapayAccounts.add(new InstapayAccount("3ab2wy","omar123456789","01157157114",1000.0));
 
     }
 
@@ -100,5 +101,11 @@ public class Database {
         }
         return null;
     }
-
+    public boolean searchByMobNum(String mobileNumber){
+        for (InstapayAccount account : instapayAccounts){
+            if (account.getUserName().equals(mobileNumber))
+                return true;
+        }
+        return false;
+    }
 }
