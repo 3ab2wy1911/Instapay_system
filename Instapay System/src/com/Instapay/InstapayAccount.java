@@ -1,6 +1,8 @@
 package com.Instapay;
 
 import com.Instapay.Accounts.AccountType;
+import com.Instapay.Accounts.Wallets.WalletAccount;
+import com.Instapay.Accounts.Wallets.WalletApi;
 import com.Instapay.Bills.Bills;
 
 import java.util.Iterator;
@@ -19,11 +21,11 @@ public class InstapayAccount {
     private double balance;
     private AccountType account;
     private List<Bills> bills;
-
+    private WalletApi walletapi;
     //------------------------------------------------------------------------------------------------------------------
 
     // Constructor
-    protected InstapayAccount(String userName, String password, String mobileNumber, double balance){
+    public InstapayAccount(String userName, String password, String mobileNumber, double balance){
         this.userName = userName;
         this.password = password;
         this.mobileNumber = mobileNumber;
@@ -31,7 +33,7 @@ public class InstapayAccount {
         setBills(mobileNumber);
     }
 
-    protected InstapayAccount(){}
+    public InstapayAccount(){}
 
     //----------------------------------------------------------------
 
@@ -54,6 +56,9 @@ public class InstapayAccount {
 
     public void setBills(String number) {
         this.bills = Database.getBill(number);
+    }
+    public void setApi(WalletApi wapi){
+        this.walletapi = wapi;
     }
 
     //----------------------------------------------------------------
@@ -161,7 +166,59 @@ public class InstapayAccount {
     //----------------------------------------------------------------
 
     public void transfer(){
-        // TODO
+        int choice;
+        System.out.println("(1) Transfer to a wallet\n(2) Transfer to bank account");
+        Scanner input = new Scanner(System.in);
+        choice = input.nextInt();
+        // if choice to send to a wallet whether it was a payment companies or bank
+        // and to send you have to enter the wallet number and check if it has a wallet
+        if (choice == 1){
+            String mobileNumber;
+            System.out.println("Please Select Wallet Providers:- ");
+            System.out.println("(1) Electronic Payment Companies ie: Fawry");
+            System.out.println("(2) Telecommunication Companies ie:Vodafone Cash");
+            System.out.println("(3) Bank Wallets");
+            choice = input.nextInt();
+            if (choice > 3 || choice <= 0){
+                System.out.println("invalid choice");
+                return;
+            }
+            System.out.println("Please enter mobile number");
+            mobileNumber = input.next();
+            if (choice == 1){
+                System.out.println("(1) Fawry");
+                choice = input.nextInt();
+                if (choice > 1 || choice <= 0){
+                    System.out.println("invalid choice");
+                    return;
+                }
+                if (choice == 1){
+                    // id 3 for fawry
+                    if(walletapi.searchForNumber(mobileNumber, 3)){
+                        Double amount;
+                        System.out.println("Enter Amount: ");
+                        amount = input.nextDouble();
+                        if (amount <= getBalance()){
+                            balance -= amount; // edit the sender balance
+                            WalletAccount wacc = walletapi.getAccountWithNumber(mobileNumber); // get the account of the receiver through api
+                            wacc.setBalance(wacc.getBalance() + amount); // to update the receiver balance
+                        }
+                        else {
+                            System.out.println("Insufficient Balance!");
+                            return;
+                        }
+                    }
+                    else {
+                        // mobile number is not found
+                        System.out.println("Mobile Number not found!");
+                        return;
+                    }
+                }
+
+            }
+
+        }
+
     }
 
     //----------------------------------------------------------------
