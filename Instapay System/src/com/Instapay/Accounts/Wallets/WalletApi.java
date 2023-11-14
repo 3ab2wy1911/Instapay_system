@@ -52,7 +52,7 @@ public abstract class WalletApi {
     //-----------------------------------------------------------------
     public WalletAccount getAccount(String userName){
         for (WalletAccount account : accounts){
-            if (account.getMobileNumber().equals(userName)){
+            if (account.getUserName().equals(userName)){
                 return account;
             }
         }

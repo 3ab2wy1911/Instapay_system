@@ -155,7 +155,7 @@ public class InstapayAccount {
 
         String accountPassword = accountType.getPassword(), accountMobileNumber = accountType.getMobileNumber();
 
-        if (accountPassword == password && accountMobileNumber == mobileNumber) {
+        if (accountPassword.equals(password) && accountMobileNumber.equals(mobileNumber)) {
             System.out.println("Account was Found :)");
         }
 
@@ -173,6 +173,11 @@ public class InstapayAccount {
             System.out.println("Mobile Verification Failed :(");
             return;
         }
+
+        if (db.verifyMobileNumber(mobileNumber)){
+            System.out.println("There is already an account with this mobile number !!!");
+            return;
+        }
         System.out.print("Enter a user name : ");
         userName = scanner.next();
         while (!db.verifyUserName(userName)){
@@ -181,11 +186,18 @@ public class InstapayAccount {
         }
 
         System.out.print("Enter a password : ");
+        scanner.nextLine();
         password = scanner.nextLine();
+        String strongPasswordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";  // Regex of strong password.
+        while (!password.matches((strongPasswordRegex))){
+            System.out.println("Please Enter a strong password : ");
+            password = scanner.nextLine();
+        }
 
         this.balance = accountType.getBalance();
         this.userName = userName;
         this.password = password;
+        this.mobileNumber = mobileNumber;
 
         db.updateInstapayAccounts(this);
 

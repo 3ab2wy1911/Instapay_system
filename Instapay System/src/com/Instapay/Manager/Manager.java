@@ -10,7 +10,6 @@ public class Manager {
 
     public int mainMenu(){
 
-        System.out.println("Welcome to Instapay App!");
         System.out.println("1.Login\n2.Register\n3.Exit");
         System.out.print("Enter your choice : ");
         int choice = Database.scanner.nextInt();
@@ -25,7 +24,7 @@ public class Manager {
 
     public int operations(){
 
-        System.out.println("1.Transfer\n2.Pay a Bill\n3.Inquire about the balance\n4.Exit");
+        System.out.println("1.Transfer\n2.Pay a Bill\n3.Inquire about the balance\n4.Log out");
         System.out.print("Enter your choice : ");
         int choice = Database.scanner.nextInt();
         while(choice >4 || choice <1){
@@ -41,6 +40,8 @@ public class Manager {
 
         db = new Database();
         instapayAccount = new InstapayAccount();
+
+        System.out.println("Welcome to Instapay App!");
 
         int answer = 0,choice = 0;
         while(true) {

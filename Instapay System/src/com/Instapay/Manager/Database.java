@@ -176,4 +176,14 @@ public class Database {
 
     //----------------------------------------------------------------
 
+    public boolean verifyMobileNumber(String mobileNumber){
+        for (InstapayAccount account : instapayAccounts){
+            if(account.getMobileNumber().equals(mobileNumber)){
+                return true;
+            }
+        }
+        return false;
+    }
+    //----------------------------------------------------------------
+
 }

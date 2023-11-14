@@ -48,7 +48,7 @@ public abstract class BankApi {
 
     public BankAccount getAccount(String userName){
         for (BankAccount account : accounts){
-            if (account.getMobileNumber().equals(userName)){
+            if (account.getUserName().equals(userName)){
                 return account;
             }
         }
