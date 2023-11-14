@@ -1,5 +1,4 @@
-import com.Instapay.Accounts.AccountType;
-import com.Instapay.Accounts.Wallets.Fawry;
+
 import com.Instapay.Accounts.Wallets.WalletAccount;
 import com.Instapay.Accounts.Wallets.WalletApi;
 import com.Instapay.Database;
@@ -37,10 +36,12 @@ public class Main {
         insacc.setApi(wapiFawry);
 //        insacc.setApi(wapiVodafone);
 //        insacc.setApi(wapiTelda);
+        insacc.setDataBase(d);
 
         insacc.transfer();
         insacc.inquireBalance();
-        wapiFawry.printAccounts();
+        d.printInstas("0121212");
+        //wapiFawry.printAccounts();
     }
 
 }
