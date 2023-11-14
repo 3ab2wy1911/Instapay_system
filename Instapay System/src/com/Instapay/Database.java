@@ -18,7 +18,7 @@ public class Database {
 
     //------------------------------------------------------------------------------------------------------------------
 
-    Database(){
+    public Database(){
         numbers = new String[]{"01095454010", "01557425211", "01158868614", "01550033327"};
         bills = new Bills[]{new ElectricityBill("Electricity","Faisel ST.",1,350,"01095454010"),
         new GasBill("Gas","Faisel ST.",2,150,"01095454010"),
