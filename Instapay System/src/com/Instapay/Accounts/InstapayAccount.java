@@ -23,6 +23,7 @@ public class InstapayAccount {
     private String mobileNumber;
     private double balance;
     private AccountType accountType;
+
     private String type;
     private List<Bills> bills;
 
@@ -69,6 +70,10 @@ public class InstapayAccount {
 
     public double getBalance() {
         return balance;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public List<Bills> getBills() {
@@ -153,13 +158,13 @@ public class InstapayAccount {
             return;
         }
 
-        if (Database.verifyMobileNumber(mobileNumber)){
+        if (Database.verifyInstaMobileNumber(mobileNumber, type)){
             System.out.println("There is already an account with this mobile number !!!");
             return;
         }
         System.out.print("Enter a user name : ");
         userName = scanner.next();
-        while (!Database.verifyUserName(userName)){
+        while (Database.verifyUserName(userName)){
             System.out.print("This User Name is unavailable please enter another one : ");
             userName = scanner.next();
         }

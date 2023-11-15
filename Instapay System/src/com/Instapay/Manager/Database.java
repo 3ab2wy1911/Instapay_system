@@ -21,7 +21,7 @@ public class Database {
 
     public Database(){
 
-        numbers = new String[]{"01095454010", "01557425211", "01158868614", "01550033327"};
+        numbers = new String[]{"01095454010", "01557425211", "01158868614", "01550033327","01000033328"};
 
 
         bills = new Bills[]{new ElectricityBill("Electricity","Faisel ST.",1,350,"01095454010"),
@@ -30,7 +30,7 @@ public class Database {
 
 
         banks = new BankApi[] {new CIB(), new QNB()};
-        wallets = new WalletApi[]{new TeldaWallet(), new VodafoneCash(), new Fawry()};
+        wallets = new WalletApi[]{new VodafoneCash(),new TeldaWallet(), new Fawry()};
 
 //        dummy accounts added in instapayAccounts list
         instapayAccounts.add(new InstapayAccount("mohamedahmedriyad","reyad123456789","01157157114",60122, "Bank"));
@@ -164,9 +164,9 @@ public class Database {
 
     //----------------------------------------------------------------
 
-    public static boolean verifyMobileNumber(String mobileNumber){
+    public static boolean verifyInstaMobileNumber(String mobileNumber, String type){
         for (InstapayAccount account : instapayAccounts){
-            if(account.getMobileNumber().equals(mobileNumber)){
+            if(account.getMobileNumber().equals(mobileNumber) && account.getType() == type){
                 return true;
             }
         }

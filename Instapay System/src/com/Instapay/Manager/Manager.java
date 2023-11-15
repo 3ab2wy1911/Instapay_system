@@ -36,8 +36,8 @@ public class Manager {
 
     public void startApplication() {
 
-        new Database();
         InstapayAccount instapayAccount = new InstapayAccount();
+        new Database();
 
         System.out.println("Welcome to Instapay App!");
 
@@ -68,6 +68,7 @@ public class Manager {
                         instapayAccount.inquireBalance();
                     }
                 }
+                instapayAccount = new InstapayAccount();
             }
         }
         System.out.println("Thanks for using Instapay App!");
