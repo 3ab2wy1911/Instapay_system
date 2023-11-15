@@ -9,9 +9,11 @@ import com.Instapay.Manager.Database;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import static com.Instapay.Manager.Database.*;
+import static java.lang.System.exit;
 
 public class InstapayAccount {
 
@@ -268,122 +270,41 @@ public class InstapayAccount {
     }
 
     //----------------------------------------------------------------
-    public void transferToPayment(String mobileNumber){
-        int choice;
-        Scanner input = new Scanner(System.in);
-        System.out.println("(1) Fawry");
-        choice = input.nextInt();
-        if (choice > 1 || choice <= 0) {
-            System.out.println("invalid choice");
-            return;
-        }
-        if (choice == 1) {
-            // id 3 for fawry
-            if (walletapi.searchForNumber(mobileNumber, 3)) {
-                double amount;
-                System.out.println("Enter Amount: ");
-                amount = input.nextDouble();
-                if (amount <= getBalance()) {
-                    balance -= amount; // edit the sender balance
-                    WalletAccount wacc = walletapi.getAccountWithNumber(mobileNumber); // get the account of the receiver through api
-                    wacc.setBalance(wacc.getBalance() + amount); // to update the receiver balance
-                } else {
-                    System.out.println("Insufficient Balance!");
-                    return;
-                }
-            } else {
-                // mobile number is not found
-                System.out.println("Mobile Number not found!");
-                return;
-            }
-        }
-
-    }
 
     //----------------------------------------------------------------
-
-    public void transferToTelecomComp(String mobileNumber){
-        int choice;
-        Scanner input = new Scanner(System.in);
-        System.out.println("(1) Vodafone Cash");
-        choice = input.nextInt();
-        if (choice > 1 || choice <= 0) {
-            System.out.println("invalid choice");
-            return;
-        }
-        if (choice == 1) {
-            // id 2 for vodafone cash
-            if (walletapi.searchForNumber(mobileNumber, 2)) {
-                double amount;
-                System.out.println("Enter Amount: ");
-                amount = input.nextDouble();
-                if (amount <= getBalance()) {
-                    balance -= amount; // edit the sender balance
-                    WalletAccount wacc = walletapi.getAccountWithNumber(mobileNumber); // get the account of the receiver through api
-                    wacc.setBalance(wacc.getBalance() + amount); // to update the receiver balance
-                } else {
-                    System.out.println("Insufficient Balance!");
-                    return;
-                }
-            } else {
-                // mobile number is not found
-                System.out.println("Mobile Number not found!");
-                return;
-            }
-        }
-    }
-
-    //----------------------------------------------------------------
-
-    public void transferToBankWallet(String mobileNumber){
-        int choice;
-        Scanner input = new Scanner(System.in);
-        System.out.println("(1) Telda");
-        choice = input.nextInt();
-        if (choice > 1 || choice <= 0) {
-            System.out.println("invalid choice");
-            return;
-        }
-        if (choice == 1) {
-            // id 1 for Telda
-            if (walletapi.searchForNumber(mobileNumber, 1)) {
-                Double amount;
-                System.out.println("Enter Amount: ");
-                amount = input.nextDouble();
-                if (amount <= getBalance()) {
-                    balance -= amount; // edit the sender balance
-                    WalletAccount wacc = walletapi.getAccountWithNumber(mobileNumber); // get the account of the receiver through api
-                    wacc.setBalance(wacc.getBalance() + amount); // to update the receiver balance
-                } else {
-                    System.out.println("Insufficient Balance!");
-                    return;
-                }
-            } else {
-                // mobile number is not found
-                System.out.println("Mobile Number not found!");
-                return;
-            }
-        }
-    }
-
-    //----------------------------------------------------------------
-
     public void transferToInstapayAcc(String mobileNumber, String userName){
         double amount;
         Scanner input = new Scanner(System.in);
+        InstapayAccount acc;
         // if mobile number is not null then we should search by mobileNumber
         if (mobileNumber.length() != 0){
-            if(db.verifyUserName(mobileNumber)){    // wrong use here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                System.out.println("Enter Amount:-");
-                amount = input.nextDouble();
-                if (amount > this.balance){
-                    System.out.println("Insufficient Balance!");
-                }
-                else {
+            acc = db.getInstaPayAccountByMobNumber(mobileNumber);
+            if (acc != null){
+                if(acc.getUserName() != this.userName){
+                    while(true){
+                        System.out.println("Enter Amount:-");
+                        input.useLocale(Locale.US);
+                        amount = input.nextDouble();
+                        input.nextLine();
+                        if (amount > this.balance){
+                            System.out.println("Insufficient Balance!");
+                        }
+
+                        else if (amount <= -2 || amount == 0){
+                            System.out.println("Enter a valid amount!");
+                        }
+                        else if (amount == -1){
+                            exit(0);
+                        }
+                        else break;
+                    }
                     InstapayAccount insacc = db.getInstaPayAccountByMobNumber(mobileNumber); // get the instapay account by mob number and update it
                     insacc.balance += amount;
                     this.balance -= amount;
                     System.out.println("Transferred Successfully");
+                }
+                else {
+                    System.out.println("Mobile Number not found");
                 }
             }
             else {
@@ -391,52 +312,81 @@ public class InstapayAccount {
             }
         }
         else {
-            if(!db.verifyUserName(userName)){   // update it as i updated the function in db !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                System.out.println("Enter Amount:-");
-                amount = input.nextDouble();
-                if (amount > this.balance){
-                    System.out.println("Insufficient Balance!");
-                }
-                else {
-                    InstapayAccount insacc = db.getInstaPayAccountByUserName(userName); // get the instapay account by mob number and update it
+            acc = db.getInstaPayAccountByUserName(userName);
+            if (acc != null){
+                if(acc.getUserName() != this.userName){
+                    while(true){
+                        System.out.println("Enter Amount:-");
+                        input.useLocale(Locale.US);
+                        amount = input.nextDouble();
+                        input.nextLine();
+                        if (amount > this.balance){
+                            System.out.println("Insufficient Balance!");
+                        }
+
+                        else if (amount <= -2 || amount == 0){
+                            System.out.println("Enter a valid amount!");
+                        }
+                        else if (amount == -1){
+                            exit(0);
+                        }
+                        else break;
+                    }
+                    InstapayAccount insacc = db.getInstaPayAccountByUserName(userName);
                     insacc.balance += amount;
                     this.balance -= amount;
                     System.out.println("Transferred Successfully");
                 }
+                else {
+                    System.out.println("User Name not found");
+                }
+            }
+            else {
+                System.out.println("User Name not found");
             }
         }
+
     }
 
     //----------------------------------------------------------------
 
     public void transfer() {
         int choice;
-        System.out.println("(1) Transfer to a wallet\n(2) Transfer to Instapay Account");
+        System.out.println("(1) Transfer to a wallet\n(2) Transfer to Instapay Account\n(3) Exit");
         Scanner input = new Scanner(System.in);
         choice = input.nextInt();
-        // if choice to send to a wallet whether it was a payment companies or bank
-        // and to send you have to enter the wallet number and check if it has a wallet
+        input.nextLine();
         if (choice == 1) {
+            System.out.println("Please enter mobile number");
             String mobileNumber;
-            System.out.println("Please Select Wallet Providers:- ");
-            System.out.println("(1) Electronic Payment Companies ie: Fawry");
-            System.out.println("(2) Telecommunication Companies ie:Vodafone Cash");
-            System.out.println("(3) Bank Wallets");
-            choice = input.nextInt();
-            if (choice > 3 || choice <= 0) {
-                System.out.println("invalid choice");
+            mobileNumber = input.nextLine();
+            WalletAccount wacc = db.getAccountWithNumber(mobileNumber);
+            if (!this.getMobileNumber().equals(mobileNumber) && wacc != null) {
+                double amount;
+                while(true){
+                    System.out.println("Enter Amount: ");
+                    input.useLocale(Locale.US);
+                    amount = input.nextDouble();
+                    if (amount <= this.getBalance() && amount > 0) {
+                        wacc.setBalance(wacc.getBalance() + amount);
+                        db.updateWalletAccount(wacc);
+                        this.updateBalance(this.getBalance() - amount);
+                        System.out.println("Transferred Successfully");
+                        return;
+                    } else if (this.getBalance() < amount){
+                        System.out.println("Insufficient Balance!");
+                    }
+                    else if (amount == -1) return;
+                    else {
+                        System.out.println("Enter a valid amount");
+                    }
+                }
+
+
+            } else {
+                System.out.println("Mobile Number not found!");
                 return;
             }
-            System.out.println("Please enter mobile number");
-            mobileNumber = input.next();
-            if (choice == 1) {
-                transferToPayment(mobileNumber);
-            } else if (choice == 2) {
-                transferToTelecomComp(mobileNumber);
-            } else if (choice == 3) {
-                transferToBankWallet(mobileNumber);
-            }
-
         }
         else if (choice == 2){
             String mobileNumber;
@@ -445,17 +395,22 @@ public class InstapayAccount {
             double amount;
             System.out.println("How do you want to send money:-\n(1) mobile number \n(2) username");
             tempChoice = input.nextInt();
+            input.nextLine();
             if (tempChoice == 1){
                 System.out.println("Enter Mobile Number");
-                mobileNumber = input.next();
+                mobileNumber = input.nextLine();
                 transferToInstapayAcc(mobileNumber, "");
             }
-            if (tempChoice == 2){
+            else if (tempChoice == 2){
                 System.out.println("Enter User Name");
-                userName = input.next();
+                userName = input.nextLine();
                 transferToInstapayAcc("", userName);
             }
+            else {
+                System.out.println("invalid choice");
+            }
         }
+        else return;
     }
 
     //----------------------------------------------------------------

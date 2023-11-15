@@ -42,7 +42,7 @@ public class Database {
         instapayAccounts.add(new InstapayAccount("mohamedahmedriyad","reyad123456789","01157157114",60122));
         instapayAccounts.add(new InstapayAccount("ahmedshaban","shaban123456789","01157157114",60122));
         instapayAccounts.add(new InstapayAccount("aq","abqawy123456789","01557425211",60122));
-        instapayAccounts.add(new InstapayAccount("omarmohmaedfayek","omar123456789","01157157114",60122));
+        instapayAccounts.add(new InstapayAccount("omarmohmaedfayek","omar123456789","01550033327",60122));
         instapayAccounts.add(new InstapayAccount("3ab2wy","omar123456789","01095454010",1000.0));
 
     }
