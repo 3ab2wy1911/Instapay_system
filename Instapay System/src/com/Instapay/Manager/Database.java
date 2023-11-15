@@ -14,7 +14,7 @@ public class Database {
     private static    Bills [] bills = new Bills[]{};
     private static BankApi[] banks = new BankApi[]{};
     private static WalletApi[] wallets = new WalletApi[]{};
-    private static List<InstapayAccount> instapayAccounts = new ArrayList<>();
+    private static final List<InstapayAccount> instapayAccounts = new ArrayList<>();
     public static Scanner scanner = new Scanner (System.in);
 
     //------------------------------------------------------------------------------------------------------------------
@@ -171,57 +171,6 @@ public class Database {
             }
         }
         return false;
-    }
-    //----------------------------------------------------------------
-    public static WalletAccount getAccountWithNumber(String mobileNumber){
-        for (int i = 0; i < 3; i++){
-            for (WalletAccount wacc : wallets[i].getAccounts()){
-                if (wacc.getMobileNumber().equals(mobileNumber)){
-                    return wacc;
-                }
-            }
-        }
-        return null;
-    }
-    //---------------------------------------------------------------
-    public static void updateWalletAccount(WalletAccount acc){
-        for (int i = 0; i < 3; i++){
-            for (WalletAccount wacc : wallets[i].getAccounts()){
-                if (wacc.getMobileNumber().equals(acc.getMobileNumber())){
-                    wacc = acc;
-                }
-            }
-        }
-    }
-
-    public static boolean searchBankAccount(String mobileNuber){
-        for (int i = 0; i < 2; i++){
-            for (BankAccount wacc : banks[i].getAccounts()){
-                if (wacc.getMobileNumber().equals(mobileNuber)){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    public static void updateBankAccount(BankAccount acc){
-        for (int i = 0; i < 2; i++){
-            for (BankAccount wacc : banks[i].getAccounts()){
-                if (wacc.getMobileNumber().equals(acc.getMobileNumber())){
-                    wacc = acc;
-                }
-            }
-        }
-    }
-    public static BankAccount getBankAccount(String mobileNumber){
-        for (int i = 0; i < 2; i++){
-            for (BankAccount wacc : banks[i].getAccounts()){
-                if (wacc.getMobileNumber().equals(mobileNumber)){
-                    return wacc;
-                }
-            }
-        }
-        return null;
     }
 
     //----------------------------------------------------------------
