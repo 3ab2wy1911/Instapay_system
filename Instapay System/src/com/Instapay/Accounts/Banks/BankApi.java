@@ -14,7 +14,7 @@ public abstract class BankApi {
     public BankApi(String name, int id ){
         this.name = name;
         this.id = id;
-        accounts  = new ArrayList<BankAccount>(){};
+        accounts  = new ArrayList<>(){};
     }
     // Setters
     public void setName(String name) {
@@ -26,7 +26,7 @@ public abstract class BankApi {
     }
 
     public void setAccounts(List<BankAccount> accounts) {
-        this.accounts = accounts;
+        BankApi.accounts = accounts;
     }
 
     //------------------------------------

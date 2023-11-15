@@ -25,16 +25,16 @@ public class InstapayAccount {
     private AccountType accountType;
     private String type;
     private List<Bills> bills;
-    private WalletApi walletapi;
 
-    private Database db; // to be deleted after the creation of menu display
     //------------------------------------------------------------------------------------------------------------------
 
-    // Constructor
+    // Constructors
 
     public  InstapayAccount(){
-        db = new Database();
     }
+
+    //----------------------------------------------------------------
+
     public InstapayAccount(String userName, String password, String mobileNumber, double balance, String type){
         this.userName = userName;
         this.password = password;
@@ -47,31 +47,11 @@ public class InstapayAccount {
     //----------------------------------------------------------------
 
     // Setters
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
 
     public void setBills(String number) {
         this.bills = Database.getBill(number);
     }
-    public void setApi(WalletApi wapi){
-        this.walletapi = wapi;
-    }
-    public void setDataBase(Database db){
-        this.db = db;
-    }
+
     //----------------------------------------------------------------
 
     // Getters
@@ -96,11 +76,6 @@ public class InstapayAccount {
     }
 
     //----------------------------------------------------------------
-    public void displayMenu(){
-
-    }
-
-    //----------------------------------------------------------------
 
     public void register() {
         String type;
@@ -118,12 +93,11 @@ public class InstapayAccount {
         else {
             type = "wallet";
         }
-        db.displayApis(choice); // Display the banks or the wallets.
+        Database.displayApis(choice); // Display the banks or the wallets.
 
         // Select the name of the bank or wallet.
         System.out.println("Enter the id of your Bank or Wallet : ");
         int answer = scanner.nextInt();
-
 
 
 
@@ -136,29 +110,26 @@ public class InstapayAccount {
         String mobileNumber = scanner.next();
 
         if(choice == 1) {
-            BankApi api = db.selectBank(answer);
+            BankApi api = Database.selectBank(answer);
             if (api == null) {
                 System.out.println("Bank not found ! Exiting the Registration Process...");
                 return;
             }
 
             this.accountType = api.getAccount(userName);
-            if (accountType == null) {
-                System.out.println("Account not found ! Exiting the Registration Process...");
-                return;
-            }
         }
         else {
-            WalletApi api = db.selectWallet(answer);
+            WalletApi api = Database.selectWallet(answer);
             if (api == null) {
                 System.out.println("Wallet not found ! Exiting the Registration Process...");
                 return;
             }
             this.accountType = api.getAccount(userName);
-            if (accountType == null) {
-                System.out.println("Account not found ! Exiting the Registration Process...");
-                return;
-            }
+        }
+
+        if (accountType == null) {
+            System.out.println("Account not found ! Exiting the Registration Process...");
+            return;
         }
 
         String accountPassword = accountType.getPassword(), accountMobileNumber = accountType.getMobileNumber();
@@ -174,7 +145,7 @@ public class InstapayAccount {
 
         System.out.println("Verifying mobile Number....");
         // Verify that the number is found.
-        if (db.verifyNumber(mobileNumber)){
+        if (Database.verifyNumber(mobileNumber)){
             System.out.println("Mobile Verification Succeed :)");
         }
         else{
@@ -182,13 +153,13 @@ public class InstapayAccount {
             return;
         }
 
-        if (db.verifyMobileNumber(mobileNumber)){
+        if (Database.verifyMobileNumber(mobileNumber)){
             System.out.println("There is already an account with this mobile number !!!");
             return;
         }
         System.out.print("Enter a user name : ");
         userName = scanner.next();
-        while (!db.verifyUserName(userName)){
+        while (!Database.verifyUserName(userName)){
             System.out.print("This User Name is unavailable please enter another one : ");
             userName = scanner.next();
         }
@@ -207,23 +178,19 @@ public class InstapayAccount {
         this.password = password;
         this.mobileNumber = mobileNumber;
         this.type = type;
-        db.updateInstapayAccounts(this);
-
     }
 
     //----------------------------------------------------------------
 
     public void signIn(){
         System.out.println("--------------------------------Login--------------------------------");
-        System.out.println("Enter user name:");
-//        scanner.nextLine();
+        System.out.print("Enter user name: ");
         String userName = scanner.next();
 
         for (InstapayAccount account : getInstapayAccounts()) {
-            if (userName.equals(account.getUserName())) {
-                System.out.println("UserName found.");
 
-                System.out.println("Enter user Password:");
+            if (userName.equals(account.getUserName())) {
+                System.out.print("Enter user Password: ");
                 scanner.nextLine();
                 String password = scanner.nextLine();
 
@@ -235,31 +202,17 @@ public class InstapayAccount {
                     this.bills = account.getBills();
                     this.type = account.type;
                     System.out.println("Password matches user name. Welcome "+this.userName+ ":)");
-                    return;
                 }
 
                 else {
                     System.out.println("Incorrect password :(");
-                    return;
                 }
+                return;
 
             }
         }
         System.out.println("UserName not found :(");
     }
-
-
-    //----------------------------------------------------------------
-
-//    public void showAccounts() {
-//        System.out.println("accounts exist are : \n");
-//        for (InstapayAccount account : getInstapayAccounts()) {
-//        System.out.println("username : "+account.userName);
-//        System.out.println("Password : "+account.password);
-//        System.out.println();
-//    }
-//}
-
 
     //----------------------------------------------------------------
 
@@ -278,16 +231,15 @@ public class InstapayAccount {
 
     //----------------------------------------------------------------
 
-    //----------------------------------------------------------------
     public void transferToInstapayAcc(String mobileNumber, String userName){
         double amount;
         Scanner input = new Scanner(System.in);
         InstapayAccount acc;
         // if mobile number is not null then we should search by mobileNumber
         if (mobileNumber.length() != 0){
-            acc = db.getInstaPayAccountByMobNumber(mobileNumber);
+            acc = Database.getInstaPayAccountByMobNumber(mobileNumber);
             if (acc != null){
-                if(acc.getUserName() != this.userName){
+                if(!acc.getUserName().equals(this.userName)){
                     while(true){
                         System.out.println("Enter Amount:-");
                         input.useLocale(Locale.US);
@@ -305,7 +257,7 @@ public class InstapayAccount {
                         }
                         else break;
                     }
-                    InstapayAccount insacc = db.getInstaPayAccountByMobNumber(mobileNumber); // get the instapay account by mob number and update it
+                    InstapayAccount insacc = Database.getInstaPayAccountByMobNumber(mobileNumber); // get the instapay account by mob number and update it
                     insacc.balance += amount;
                     this.balance -= amount;
                     System.out.println("Transferred Successfully");
@@ -319,9 +271,9 @@ public class InstapayAccount {
             }
         }
         else {
-            acc = db.getInstaPayAccountByUserName(userName);
+            acc = Database.getInstaPayAccountByUserName(userName);
             if (acc != null){
-                if(acc.getUserName() != this.userName){
+                if(!acc.getUserName().equals(this.userName)){
                     while(true){
                         System.out.println("Enter Amount:-");
                         input.useLocale(Locale.US);
@@ -339,7 +291,7 @@ public class InstapayAccount {
                         }
                         else break;
                     }
-                    InstapayAccount insacc = db.getInstaPayAccountByUserName(userName);
+                    InstapayAccount insacc = Database.getInstaPayAccountByUserName(userName);
                     insacc.balance += amount;
                     this.balance -= amount;
                     System.out.println("Transferred Successfully");
@@ -367,7 +319,7 @@ public class InstapayAccount {
             System.out.println("Please enter mobile number");
             String mobileNumber;
             mobileNumber = input.nextLine();
-            WalletAccount wacc = db.getAccountWithNumber(mobileNumber);
+            WalletAccount wacc = Database.getAccountWithNumber(mobileNumber);
             if (wacc != null){
                 if (!this.getMobileNumber().equals(mobileNumber)) {
                     double amount;
@@ -377,7 +329,7 @@ public class InstapayAccount {
                         amount = input.nextDouble();
                         if (amount <= this.getBalance() && amount > 0) {
                             wacc.setBalance(wacc.getBalance() + amount);
-                            db.updateWalletAccount(wacc);
+                            Database.updateWalletAccount(wacc);
                             this.updateBalance(this.getBalance() - amount);
                             System.out.println("Transferred Successfully");
                             return;
@@ -393,12 +345,10 @@ public class InstapayAccount {
 
                 } else {
                     System.out.println("Mobile Number not found!");
-                    return;
                 }
             }
             else {
                 System.out.println("Mobile Number not found!");
-                return;
             }
 
         }
@@ -406,7 +356,6 @@ public class InstapayAccount {
             String mobileNumber;
             String userName;
             int tempChoice;
-            double amount;
             System.out.println("How do you want to send money:-\n(1) mobile number \n(2) username");
             tempChoice = input.nextInt();
             input.nextLine();
@@ -430,8 +379,8 @@ public class InstapayAccount {
                 String mobileNumber;
                 mobileNumber = input.nextLine();
                 BankAccount bacc;
-                if(db.searchBankAccount(mobileNumber)){
-                    bacc = db.getBankAccount(mobileNumber);
+                if(Database.searchBankAccount(mobileNumber)){
+                    bacc = Database.getBankAccount(mobileNumber);
                     double amount;
                     while(true){
                         System.out.println("Enter Amount: ");
@@ -439,7 +388,7 @@ public class InstapayAccount {
                         amount = input.nextDouble();
                         if (amount <= this.getBalance() && amount > 0) {
                             bacc.setBalance(bacc.getBalance() + amount);
-                            db.updateBankAccount(bacc);
+                            Database.updateBankAccount(bacc);
                             this.updateBalance(this.getBalance() - amount);
                             System.out.println("Transferred Successfully");
                             return;
@@ -504,7 +453,7 @@ public class InstapayAccount {
                     } else {
                         this.updateBalance(this.getBalance() - bill.getAmount()); // updating balance after paying
                         iterator.remove(); // Remove the bill from the list
-
+                        Database.updateBills(choice);
                         System.out.println(bill.getName() +" Bill has been paid successfully. Your current balance: " + this.getBalance());
                     }
                 }

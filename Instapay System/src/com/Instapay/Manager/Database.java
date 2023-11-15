@@ -30,17 +30,7 @@ public class Database {
 
 
         banks = new BankApi[] {new CIB(), new QNB()};
-        banks[0].addAccount(new BankAccount("omar16", "123456", "01234567899", 2000.5));
-        banks[0].addAccount(new BankAccount("omar17", "123456", "01234567810", 2000.5));
-        banks[0].addAccount(new BankAccount("omar18", "123456", "01234567811", 2000.5));
-
-        wallets = new WalletApi[]{new TeldaWallet("Banque du Caire Wallet", 1), new VodafoneCash("Vodafone Cash", 2), new Fawry("Fawry Wallet", 3)};
-        wallets[0].addAccount(new WalletAccount("mohamed", "123465", "01111111111", 1000.0, 3));
-        wallets[0].addAccount(new WalletAccount("sh3boo", "123465", "01222222222", 2000.0, 3));
-        wallets[1].addAccount(new WalletAccount("reyad", "123465", "03333333333", 1000.0, 2));
-        wallets[1].addAccount(new WalletAccount("omar", "123465", "04444444444", 1000.0, 2));
-        wallets[2].addAccount(new WalletAccount("temp1", "123465", "05555555555", 1000.0, 1));
-        wallets[2].addAccount(new WalletAccount("temp2", "123465", "06666666666", 1950.0, 1));
+        wallets = new WalletApi[]{new TeldaWallet(), new VodafoneCash(), new Fawry()};
 
 //        dummy accounts added in instapayAccounts list
         instapayAccounts.add(new InstapayAccount("mohamedahmedriyad","reyad123456789","01157157114",60122, "Bank"));
@@ -72,7 +62,7 @@ public class Database {
 
     //----------------------------------------------------------------
 
-    public boolean verifyNumber(String number){
+    public static boolean verifyNumber(String number){
         for (String num : numbers){
             if (num.equals(number))
                 return true;
@@ -82,13 +72,13 @@ public class Database {
 
     //----------------------------------------------------------------
 
-    public void updateInstapayAccounts(InstapayAccount account){
+    public static void updateInstapayAccounts(InstapayAccount account){
         instapayAccounts.add(account);
     }
 
     //----------------------------------------------------------------
 
-    public boolean verifyUserName(String userName){
+    public static boolean verifyUserName(String userName){
         for (InstapayAccount account : instapayAccounts){
             if (account.getUserName().equals(userName))
                 return true;
@@ -120,7 +110,7 @@ public class Database {
 
     //----------------------------------------------------------------
 
-    public InstapayAccount getInstaPayAccountByMobNumber(String mobileNumber){
+    public static InstapayAccount getInstaPayAccountByMobNumber(String mobileNumber){
         for (InstapayAccount account : instapayAccounts){
             if (account.getMobileNumber().equals(mobileNumber))
                 return account;
@@ -130,7 +120,7 @@ public class Database {
 
     //----------------------------------------------------------------
 
-    public InstapayAccount getInstaPayAccountByUserName(String userName){
+    public static InstapayAccount getInstaPayAccountByUserName(String userName){
         for (InstapayAccount account : instapayAccounts){
             if (account.getUserName().equals(userName))
                 return account;
@@ -140,19 +130,7 @@ public class Database {
 
     //----------------------------------------------------------------
 
-    public void printInstas(String mobileNumber){
-        for (InstapayAccount account : instapayAccounts){
-            if (account.getMobileNumber().equals(mobileNumber)){
-                System.out.println(account.getMobileNumber());
-                System.out.println(account.getBalance());
-                break;
-            }
-
-        }
-    }
-
-    //----------------------------------------------------------------
-    public void displayApis(int id){
+    public static void displayApis(int id){
         if (id == 1){
             for (BankApi bank: banks){
                 System.out.println("Bank Name : " + bank.getName()+"\tID : "+bank.getId());
@@ -165,7 +143,7 @@ public class Database {
         }
     }
     //----------------------------------------------------------------
-    public BankApi selectBank(int id){
+    public static BankApi selectBank(int id){
         for (BankApi bank : banks){
             if (bank.getId() == id){
                 return bank;
@@ -175,7 +153,7 @@ public class Database {
     }
     //----------------------------------------------------------------
 
-    public WalletApi selectWallet(int id){
+    public static WalletApi selectWallet(int id){
         for (WalletApi wallet : wallets){
             if (wallet.getId() == id){
                 return wallet;
@@ -186,7 +164,7 @@ public class Database {
 
     //----------------------------------------------------------------
 
-    public boolean verifyMobileNumber(String mobileNumber){
+    public static boolean verifyMobileNumber(String mobileNumber){
         for (InstapayAccount account : instapayAccounts){
             if(account.getMobileNumber().equals(mobileNumber)){
                 return true;
@@ -195,7 +173,7 @@ public class Database {
         return false;
     }
     //----------------------------------------------------------------
-    public WalletAccount getAccountWithNumber(String mobileNumber){
+    public static WalletAccount getAccountWithNumber(String mobileNumber){
         for (int i = 0; i < 3; i++){
             for (WalletAccount wacc : wallets[i].getAccounts()){
                 if (wacc.getMobileNumber().equals(mobileNumber)){
@@ -206,7 +184,7 @@ public class Database {
         return null;
     }
     //---------------------------------------------------------------
-    public void updateWalletAccount(WalletAccount acc){
+    public static void updateWalletAccount(WalletAccount acc){
         for (int i = 0; i < 3; i++){
             for (WalletAccount wacc : wallets[i].getAccounts()){
                 if (wacc.getMobileNumber().equals(acc.getMobileNumber())){
@@ -216,7 +194,7 @@ public class Database {
         }
     }
 
-    public boolean searchBankAccount(String mobileNuber){
+    public static boolean searchBankAccount(String mobileNuber){
         for (int i = 0; i < 2; i++){
             for (BankAccount wacc : banks[i].getAccounts()){
                 if (wacc.getMobileNumber().equals(mobileNuber)){
@@ -226,7 +204,7 @@ public class Database {
         }
         return false;
     }
-    public void updateBankAccount(BankAccount acc){
+    public static void updateBankAccount(BankAccount acc){
         for (int i = 0; i < 2; i++){
             for (BankAccount wacc : banks[i].getAccounts()){
                 if (wacc.getMobileNumber().equals(acc.getMobileNumber())){
@@ -235,7 +213,7 @@ public class Database {
             }
         }
     }
-    public BankAccount getBankAccount(String mobileNumber){
+    public static BankAccount getBankAccount(String mobileNumber){
         for (int i = 0; i < 2; i++){
             for (BankAccount wacc : banks[i].getAccounts()){
                 if (wacc.getMobileNumber().equals(mobileNumber)){
@@ -244,5 +222,15 @@ public class Database {
             }
         }
         return null;
+    }
+
+    //----------------------------------------------------------------
+
+    public static void updateBills(int id){
+        for (Bills bill : bills){
+            if (bill.getId() == id){
+                bill.setNumber("*");
+            }
+        }
     }
 }

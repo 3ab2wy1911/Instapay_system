@@ -24,18 +24,6 @@ public abstract class AccountType {
         this.balance = balance;
     }
 //----------------------------------------------------------------------------------------------------------------------
-public void setUserName(String userName) {
-    this.userName = userName;
-}
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
     public void setBalance(double balance) {
         this.balance = balance;
     }

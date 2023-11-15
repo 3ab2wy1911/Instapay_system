@@ -3,10 +3,6 @@ package com.Instapay.Manager;
 import com.Instapay.Accounts.InstapayAccount;
 
 public class Manager {
-    private Database db;
-    private InstapayAccount instapayAccount;
-
-    //------------------------------------------------------------------------------------------------------------------
 
     public int mainMenu(){
 
@@ -20,7 +16,8 @@ public class Manager {
         }
         return choice;
     }
-    //------------------------------------------------------------------------------------------------------------------
+
+    // ----------------------------------------------------------------
 
     public int operations(){
 
@@ -35,22 +32,24 @@ public class Manager {
         return choice;
     }
 
-    //------------------------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------
+
     public void startApplication() {
 
-        db = new Database();
-        instapayAccount = new InstapayAccount();
+        new Database();
+        InstapayAccount instapayAccount = new InstapayAccount();
 
         System.out.println("Welcome to Instapay App!");
 
-        int answer = 0,choice = 0;
         while(true) {
+            int answer, choice = 0;
             answer = mainMenu();
             if (answer == 1){
                 instapayAccount.signIn();
             }
             else if (answer == 2){
                 instapayAccount.register();
+                Database.updateInstapayAccounts(instapayAccount);
             }
             else {
                 break;
@@ -73,5 +72,5 @@ public class Manager {
         }
         System.out.println("Thanks for using Instapay App!");
     }
-
+    // ----------------------------------------------------------------
 }
