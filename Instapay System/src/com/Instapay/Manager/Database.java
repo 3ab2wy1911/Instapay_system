@@ -182,4 +182,13 @@ public class Database {
             }
         }
     }
+
+    //----------------------------------------------------------------
+    public static void updateInstaAccountBalance(String number, double balance){
+        for (InstapayAccount account : instapayAccounts){
+            if (account.getMobileNumber().equals(number)){
+                account.updateBalance(balance);
+            }
+        }
+    }
 }
