@@ -106,15 +106,12 @@ public class InstapayAccount {
 
         System.out.print("Enter UserName of your Bank or Wallet account: ");
         String username = scanner.next();
-        System.out.print("Enter Password of your Bank or Wallet account: ");
-        scanner.nextLine();
-        String password = scanner.nextLine();
-        System.out.print("Enter Mobile number of your Bank or Wallet account: ");
-        String number = scanner.next();
+
 
         AccountType accountType;
         if(choice == 1) {
             BankApi api = Database.selectBank(answer);
+            this.type = "Bank";
             if (api == null) {
                 System.out.println("Bank not found ! Exiting the Registration Process...");
                 return;
@@ -124,6 +121,7 @@ public class InstapayAccount {
         }
         else {
             WalletApi api = Database.selectWallet(answer);
+            this.type = "Wallet";
             if (api == null) {
                 System.out.println("Wallet not found ! Exiting the Registration Process...");
                 return;
@@ -135,6 +133,12 @@ public class InstapayAccount {
             System.out.println("Account not found ! Exiting the Registration Process...");
             return;
         }
+
+        System.out.print("Enter Password of your Bank or Wallet account: ");
+        scanner.nextLine();
+        String password = scanner.nextLine();
+        System.out.print("Enter Mobile number of your Bank or Wallet account: ");
+        String number = scanner.next();
 
         String accountPassword = accountType.getPassword(), accountMobileNumber = accountType.getMobileNumber();
 
