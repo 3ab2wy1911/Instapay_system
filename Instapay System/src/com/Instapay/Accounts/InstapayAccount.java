@@ -170,7 +170,7 @@ public class InstapayAccount {
         System.out.print("Enter a password : ");
         scanner.nextLine();
         password = scanner.nextLine();
-        String strongPasswordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$";  // Regex of strong password.
+        String strongPasswordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";  // Regex of strong password.
         while (!password.matches((strongPasswordRegex))){
             System.out.println("Please Enter a strong password : ");
             password = scanner.nextLine();
@@ -266,12 +266,12 @@ public class InstapayAccount {
                 return;
             }
             // handling the case where you can't send to your own account
-            if (choice == 1 && instance.getUsername().equals(user)) {
-                System.out.println("That's your account");
+            if (choice == 1 && instance.getUsername().equals(this.userName)) {
+                System.out.println("That's your account!!!");
                 return;
             }
-            else if (choice == 2 &&  instance.getMobileNumber().equals(number)) {
-                System.out.println("That's your account");
+            else if (choice == 2 &&  instance.getMobileNumber().equals(this.mobileNumber)) {
+                System.out.println("That's your account!!!");
                 return;
             }
 
