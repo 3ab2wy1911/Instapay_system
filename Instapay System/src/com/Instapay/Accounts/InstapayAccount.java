@@ -280,8 +280,8 @@ public class InstapayAccount {
             System.out.println("Account found with username : " + instance.getUsername());
             System.out.print("Enter the amount of money you want to transfer : ");
             double amount = scanner.nextDouble();
-            if (amount > this.balance){
-                System.out.println("Insufficient balance !!");
+            if (amount > this.balance || amount <= 0){
+                System.out.println("Insufficient balance or invalid amount entered!!");
                 return;
             }
             this.balance -= amount;
@@ -336,8 +336,8 @@ public class InstapayAccount {
         System.out.println("Account Found with username : " + account.getUsername());
         System.out.print("Enter the amount of money you want to transfer : ");
         double amount = scanner.nextDouble();
-        if (amount > this.balance){
-            System.out.println("Insufficient balance !!");
+        if (amount > this.balance || amount <= 0){
+            System.out.println("Insufficient balance or invalid amount entered!!");
             return;
         }
         this.balance -= amount;
