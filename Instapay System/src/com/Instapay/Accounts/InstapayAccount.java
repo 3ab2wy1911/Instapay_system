@@ -79,6 +79,9 @@ public class InstapayAccount {
     public List<Bills> getBills() {
         return bills;
     }
+    private String getUsername() {
+        return userName;
+    }
 
     //----------------------------------------------------------------
 
@@ -236,189 +239,99 @@ public class InstapayAccount {
 
     //----------------------------------------------------------------
 
-    public void transferToInstapayAcc(String mobileNumber, String userName){
-        double amount;
-        Scanner input = new Scanner(System.in);
-        InstapayAccount acc;
-        // if mobile number is not null then we should search by mobileNumber
-        if (mobileNumber.length() != 0){
-            acc = Database.getInstaPayAccountByMobNumber(mobileNumber);
-            if (acc != null){
-                if(!acc.getUserName().equals(this.userName)){
-                    while(true){
-                        System.out.println("Enter Amount:-");
-                        input.useLocale(Locale.US);
-                        amount = input.nextDouble();
-                        input.nextLine();
-                        if (amount > this.balance){
-                            System.out.println("Insufficient Balance!");
-                        }
-
-                        else if (amount <= -2 || amount == 0){
-                            System.out.println("Enter a valid amount!");
-                        }
-                        else if (amount == -1){
-                            exit(0);
-                        }
-                        else break;
-                    }
-                    InstapayAccount insacc = Database.getInstaPayAccountByMobNumber(mobileNumber); // get the instapay account by mob number and update it
-                    insacc.balance += amount;
-                    this.balance -= amount;
-                    System.out.println("Transferred Successfully");
-                }
-                else {
-                    System.out.println("Mobile Number not found");
-                }
-            }
-            else {
-                System.out.println("Mobile Number not found");
-            }
+    public void transfer(){
+        int choice = 0;
+        String number, user;
+        while (choice < 1 || choice > 4){
+            System.out.println("(1)Transfer to Bank Account \n(2) Transfer to Instapay Account\n(3) Transfer to a wallet \n(4) Exit");
+            choice = scanner.nextInt();
         }
-        else {
-            acc = Database.getInstaPayAccountByUserName(userName);
-            if (acc != null){
-                if(!acc.getUserName().equals(this.userName)){
-                    while(true){
-                        System.out.println("Enter Amount:-");
-                        input.useLocale(Locale.US);
-                        amount = input.nextDouble();
-                        input.nextLine();
-                        if (amount > this.balance){
-                            System.out.println("Insufficient Balance!");
-                        }
-
-                        else if (amount <= -2 || amount == 0){
-                            System.out.println("Enter a valid amount!");
-                        }
-                        else if (amount == -1){
-                            exit(0);
-                        }
-                        else break;
-                    }
-                    InstapayAccount insacc = Database.getInstaPayAccountByUserName(userName);
-                    insacc.balance += amount;
-                    this.balance -= amount;
-                    System.out.println("Transferred Successfully");
-                }
-                else {
-                    System.out.println("User Name not found");
-                }
-            }
-            else {
-                System.out.println("User Name not found");
-            }
-        }
-
-    }
-
-    //----------------------------------------------------------------
-
-    public void transfer() {
-        int choice;
-        System.out.println("(1) Transfer to a wallet\n(2) Transfer to Instapay Account\n(3) Transfer to Bank Account\n(4) Exit");
-        Scanner input = new Scanner(System.in);
-        choice = input.nextInt();
-        input.nextLine();
-        if (choice == 1) {
-            System.out.println("Please enter mobile number");
-            String mobileNumber;
-            mobileNumber = input.nextLine();
-            WalletAccount wacc = Database.getAccountWithNumber(mobileNumber);
-            if (wacc != null){
-                if (!this.getMobileNumber().equals(mobileNumber)) {
-                    double amount;
-                    while(true){
-                        System.out.println("Enter Amount: ");
-                        input.useLocale(Locale.US);
-                        amount = input.nextDouble();
-                        if (amount <= this.getBalance() && amount > 0) {
-                            wacc.setBalance(wacc.getBalance() + amount);
-                            Database.updateWalletAccount(wacc);
-                            this.updateBalance(this.getBalance() - amount);
-                            System.out.println("Transferred Successfully");
-                            return;
-                        } else if (this.getBalance() < amount){
-                            System.out.println("Insufficient Balance!");
-                        }
-                        else if (amount == -1) return;
-                        else {
-                            System.out.println("Enter a valid amount");
-                        }
-                    }
-
-
-                } else {
-                    System.out.println("Mobile Number not found!");
-                }
-            }
-            else {
-                System.out.println("Mobile Number not found!");
-            }
-
-        }
-        else if (choice == 2){
-            String mobileNumber;
-            String userName;
-            int tempChoice;
-            System.out.println("How do you want to send money:-\n(1) mobile number \n(2) username");
-            tempChoice = input.nextInt();
-            input.nextLine();
-            if (tempChoice == 1){
-                System.out.println("Enter Mobile Number");
-                mobileNumber = input.nextLine();
-                transferToInstapayAcc(mobileNumber, "");
-            }
-            else if (tempChoice == 2){
-                System.out.println("Enter User Name");
-                userName = input.nextLine();
-                transferToInstapayAcc("", userName);
-            }
-            else {
-                System.out.println("invalid choice");
-            }
+        if (choice == 4){
+            return;
         }
         else if (choice == 3){
-            if (this.type.equals("Bank")){
-                System.out.println("Enter the number of receiver:- ");
-                String mobileNumber;
-                mobileNumber = input.nextLine();
-                BankAccount bacc;
-                if(Database.searchBankAccount(mobileNumber)){
-                    bacc = Database.getBankAccount(mobileNumber);
-                    double amount;
-                    while(true){
-                        System.out.println("Enter Amount: ");
-                        input.useLocale(Locale.US);
-                        amount = input.nextDouble();
-                        if (amount <= this.getBalance() && amount > 0) {
-                            bacc.setBalance(bacc.getBalance() + amount);
-                            Database.updateBankAccount(bacc);
-                            this.updateBalance(this.getBalance() - amount);
-                            System.out.println("Transferred Successfully");
-                            return;
-                        } else if (this.getBalance() < amount){
-                            System.out.println("Insufficient Balance!");
-                        }
-                        else if (amount == -1) return;
-                        else {
-                            System.out.println("Enter a valid amount");
-                        }
-                    }
-                }
-                else {
-                    System.out.println("Bank account not found");
-                    return;
-                }
+
+            while (choice < 1 || choice > 2){
+                System.out.println("How to you want to transfer?\n1.By username\n2.By Number\n");
+                choice = scanner.nextInt();
+            }
+            InstapayAccount instance;
+            if (choice == 1){
+                System.out.println("Enter username of Instapay Account : ");
+                user = scanner.next();
+                instance = Database.getInstaPayAccountByUserName(user);
 
             }
             else {
-                System.out.println("You are not registered with a bank account");
+                System.out.println("Enter number of Instapay Account : ");
+                number = scanner.next();
+                instance = Database.getInstaPayAccountByMobNumber(number);
+            }
+
+            if (instance == null){
+                System.out.println("Account not found!!!");
                 return;
             }
+            System.out.println("Account found with username : " + instance.getUsername());
+            System.out.print("Enter the amount of money you want to transfer : ");
+            double amount = scanner.nextDouble();
+            if (amount > this.balance){
+                System.out.println("Insufficient balance !!");
+                return;
+            }
+            this.balance -= amount;
+            instance.updateBalance(amount);
         }
-        else return;
+        else {
+            Database.displayApis(choice);
+
+            AccountType account;
+            if (choice  == 1){
+                if(!this.type.equals("bank")) {
+                    System.out.println("Sorry, You can't transfer to a bank account unless your Instapay account is registered with a bank account");
+                    return;
+                }
+                System.out.print("Enter Bank Id : ");
+                int id = scanner.nextInt();
+                BankApi bank = Database.selectBank(id);
+                if (bank == null) {
+                    System.out.println("Bank not found !!!");
+                    return;
+                }
+                number = scanner.next();
+                account = bank.getAccountUsingMobileNumber(number);
+            }
+
+            else {
+                System.out.print("Enter Wallet Id : ");
+                int id = scanner.nextInt();
+                WalletApi wallet = Database.selectWallet(id);
+
+                if (wallet == null) {
+                    System.out.println("Wallet not found!!!");
+                    return;
+                }
+                number = scanner.next();
+                account = wallet.getAccountUsingMobileNumber(number);
+            }
+            if (account == null) {
+                System.out.println("Account not found!!!");
+                return;
+            }
+
+            System.out.println("Account Found with username : " + account.getUsername());
+            System.out.print("Enter the amount of money you want to transfer : ");
+            double amount = scanner.nextDouble();
+            if (amount > this.balance){
+                System.out.println("Insufficient balance !!");
+                return;
+            }
+            this.balance -= amount;
+            account.updateBalance(amount);
+        }
+
     }
+
 
     //----------------------------------------------------------------
 

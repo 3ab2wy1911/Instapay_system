@@ -166,7 +166,7 @@ public class Database {
 
     public static boolean verifyInstaMobileNumber(String mobileNumber, String type){
         for (InstapayAccount account : instapayAccounts){
-            if(account.getMobileNumber().equals(mobileNumber) && account.getType() == type){
+            if(account.getMobileNumber().equals(mobileNumber) && (account.getType().equals(type) || type.equals("any"))){
                 return true;
             }
         }

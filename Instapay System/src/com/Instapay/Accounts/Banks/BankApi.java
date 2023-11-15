@@ -1,5 +1,7 @@
 package com.Instapay.Accounts.Banks;
 
+import com.Instapay.Accounts.AccountType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,5 +61,16 @@ public abstract class BankApi {
 
     public void addAccount(BankAccount account){
         accounts.add(account);
+    }
+
+    //------------------------------------
+
+    public AccountType getAccountUsingMobileNumber(String number) {
+        for (BankAccount account : accounts){
+            if (account.getMobileNumber().equals(number)){
+                return account;
+            }
+        }
+        return null;
     }
 }

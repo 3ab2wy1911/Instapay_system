@@ -21,7 +21,7 @@ public abstract class AccountType {
 
     //----------------------------------------------------------------------------------------------------------------------
     protected void updateBalance(double balance){
-        this.balance = balance;
+        this.balance += balance;
     }
 //----------------------------------------------------------------------------------------------------------------------
     public void setBalance(double balance) {
@@ -41,5 +41,9 @@ public abstract class AccountType {
 
     public double getBalance() {
         return balance;
+    }
+
+    public String getUsername() {
+        return userName;
     }
 }
