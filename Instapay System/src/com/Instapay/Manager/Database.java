@@ -30,6 +30,10 @@ public class Database {
 
 
         banks = new BankApi[] {new CIB(), new QNB()};
+        banks[0].addAccount(new BankAccount("omar16", "123456", "01234567899", 2000.5));
+        banks[0].addAccount(new BankAccount("omar17", "123456", "01234567810", 2000.5));
+        banks[0].addAccount(new BankAccount("omar18", "123456", "01234567811", 2000.5));
+
         wallets = new WalletApi[]{new TeldaWallet("Banque du Caire Wallet", 1), new VodafoneCash("Vodafone Cash", 2), new Fawry("Fawry Wallet", 3)};
         wallets[0].addAccount(new WalletAccount("mohamed", "123465", "01111111111", 1000.0, 3));
         wallets[0].addAccount(new WalletAccount("sh3boo", "123465", "01222222222", 2000.0, 3));
@@ -39,11 +43,11 @@ public class Database {
         wallets[2].addAccount(new WalletAccount("temp2", "123465", "06666666666", 1950.0, 1));
 
 //        dummy accounts added in instapayAccounts list
-        instapayAccounts.add(new InstapayAccount("mohamedahmedriyad","reyad123456789","01157157114",60122));
-        instapayAccounts.add(new InstapayAccount("ahmedshaban","shaban123456789","01157157114",60122));
-        instapayAccounts.add(new InstapayAccount("aq","abqawy123456789","01557425211",60122));
-        instapayAccounts.add(new InstapayAccount("omarmohmaedfayek","omar123456789","01550033327",60122));
-        instapayAccounts.add(new InstapayAccount("3ab2wy","omar123456789","01095454010",1000.0));
+        instapayAccounts.add(new InstapayAccount("mohamedahmedriyad","reyad123456789","01157157114",60122, "Bank"));
+        instapayAccounts.add(new InstapayAccount("ahmedshaban","shaban123456789","01157157114",60122, "Wallet"));
+        instapayAccounts.add(new InstapayAccount("aq","abqawy123456789","01557425211",60122,"Bank"));
+        instapayAccounts.add(new InstapayAccount("omarmohmaedfayek","omar123456789","01550033327",60122, "Wallet"));
+        instapayAccounts.add(new InstapayAccount("3ab2wy","omar123456789","01095454010",1000.0, "Bank"));
 
     }
 
@@ -210,5 +214,35 @@ public class Database {
                 }
             }
         }
+    }
+
+    public boolean searchBankAccount(String mobileNuber){
+        for (int i = 0; i < 2; i++){
+            for (BankAccount wacc : banks[i].getAccounts()){
+                if (wacc.getMobileNumber().equals(mobileNuber)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public void updateBankAccount(BankAccount acc){
+        for (int i = 0; i < 2; i++){
+            for (BankAccount wacc : banks[i].getAccounts()){
+                if (wacc.getMobileNumber().equals(acc.getMobileNumber())){
+                    wacc = acc;
+                }
+            }
+        }
+    }
+    public BankAccount getBankAccount(String mobileNumber){
+        for (int i = 0; i < 2; i++){
+            for (BankAccount wacc : banks[i].getAccounts()){
+                if (wacc.getMobileNumber().equals(mobileNumber)){
+                    return wacc;
+                }
+            }
+        }
+        return null;
     }
 }

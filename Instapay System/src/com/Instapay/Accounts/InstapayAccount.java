@@ -35,11 +35,12 @@ public class InstapayAccount {
     public  InstapayAccount(){
         db = new Database();
     }
-    public InstapayAccount(String userName, String password, String mobileNumber, double balance){
+    public InstapayAccount(String userName, String password, String mobileNumber, double balance, String type){
         this.userName = userName;
         this.password = password;
         this.mobileNumber = mobileNumber;
         this.balance = balance;
+        this.type = type;
         setBills(mobileNumber);
     }
 
@@ -102,7 +103,7 @@ public class InstapayAccount {
     //----------------------------------------------------------------
 
     public void register() {
-
+        String type;
         System.out.println("--------------------------------Register--------------------------------");
 
         // Select the type of the account.
@@ -111,7 +112,12 @@ public class InstapayAccount {
             System.out.println("Please Choose the type of your account :\n1.Bank Account.\n2.Wallet Account\n0.Exit");
             choice = scanner.nextInt();
         }
-
+        if (choice == 1){
+            type = "bank";
+        }
+        else {
+            type = "wallet";
+        }
         db.displayApis(choice); // Display the banks or the wallets.
 
         // Select the name of the bank or wallet.
@@ -200,7 +206,7 @@ public class InstapayAccount {
         this.userName = userName;
         this.password = password;
         this.mobileNumber = mobileNumber;
-
+        this.type = type;
         db.updateInstapayAccounts(this);
 
     }
@@ -227,6 +233,7 @@ public class InstapayAccount {
                     this.balance = account.getBalance();
                     this.mobileNumber = account.getMobileNumber();
                     this.bills = account.getBills();
+                    this.type = account.type;
                     System.out.println("Password matches user name. Welcome "+this.userName+ ":)");
                     return;
                 }
@@ -352,7 +359,7 @@ public class InstapayAccount {
 
     public void transfer() {
         int choice;
-        System.out.println("(1) Transfer to a wallet\n(2) Transfer to Instapay Account\n(3) Exit");
+        System.out.println("(1) Transfer to a wallet\n(2) Transfer to Instapay Account\n(3) Transfer to Bank Account\n(4) Exit");
         Scanner input = new Scanner(System.in);
         choice = input.nextInt();
         input.nextLine();
@@ -361,32 +368,39 @@ public class InstapayAccount {
             String mobileNumber;
             mobileNumber = input.nextLine();
             WalletAccount wacc = db.getAccountWithNumber(mobileNumber);
-            if (!this.getMobileNumber().equals(mobileNumber) && wacc != null) {
-                double amount;
-                while(true){
-                    System.out.println("Enter Amount: ");
-                    input.useLocale(Locale.US);
-                    amount = input.nextDouble();
-                    if (amount <= this.getBalance() && amount > 0) {
-                        wacc.setBalance(wacc.getBalance() + amount);
-                        db.updateWalletAccount(wacc);
-                        this.updateBalance(this.getBalance() - amount);
-                        System.out.println("Transferred Successfully");
-                        return;
-                    } else if (this.getBalance() < amount){
-                        System.out.println("Insufficient Balance!");
+            if (wacc != null){
+                if (!this.getMobileNumber().equals(mobileNumber)) {
+                    double amount;
+                    while(true){
+                        System.out.println("Enter Amount: ");
+                        input.useLocale(Locale.US);
+                        amount = input.nextDouble();
+                        if (amount <= this.getBalance() && amount > 0) {
+                            wacc.setBalance(wacc.getBalance() + amount);
+                            db.updateWalletAccount(wacc);
+                            this.updateBalance(this.getBalance() - amount);
+                            System.out.println("Transferred Successfully");
+                            return;
+                        } else if (this.getBalance() < amount){
+                            System.out.println("Insufficient Balance!");
+                        }
+                        else if (amount == -1) return;
+                        else {
+                            System.out.println("Enter a valid amount");
+                        }
                     }
-                    else if (amount == -1) return;
-                    else {
-                        System.out.println("Enter a valid amount");
-                    }
+
+
+                } else {
+                    System.out.println("Mobile Number not found!");
+                    return;
                 }
-
-
-            } else {
+            }
+            else {
                 System.out.println("Mobile Number not found!");
                 return;
             }
+
         }
         else if (choice == 2){
             String mobileNumber;
@@ -408,6 +422,45 @@ public class InstapayAccount {
             }
             else {
                 System.out.println("invalid choice");
+            }
+        }
+        else if (choice == 3){
+            if (this.type.equals("Bank")){
+                System.out.println("Enter the number of receiver:- ");
+                String mobileNumber;
+                mobileNumber = input.nextLine();
+                BankAccount bacc;
+                if(db.searchBankAccount(mobileNumber)){
+                    bacc = db.getBankAccount(mobileNumber);
+                    double amount;
+                    while(true){
+                        System.out.println("Enter Amount: ");
+                        input.useLocale(Locale.US);
+                        amount = input.nextDouble();
+                        if (amount <= this.getBalance() && amount > 0) {
+                            bacc.setBalance(bacc.getBalance() + amount);
+                            db.updateBankAccount(bacc);
+                            this.updateBalance(this.getBalance() - amount);
+                            System.out.println("Transferred Successfully");
+                            return;
+                        } else if (this.getBalance() < amount){
+                            System.out.println("Insufficient Balance!");
+                        }
+                        else if (amount == -1) return;
+                        else {
+                            System.out.println("Enter a valid amount");
+                        }
+                    }
+                }
+                else {
+                    System.out.println("Bank account not found");
+                    return;
+                }
+
+            }
+            else {
+                System.out.println("You are not registered with a bank account");
+                return;
             }
         }
         else return;

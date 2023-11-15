@@ -5,8 +5,9 @@ import com.Instapay.Manager.Database;
 public class BankAccount extends AccountType {
     BankApi bank;
 
-    public BankAccount() {
-        super();
+    public BankAccount(String username, String password, String mobileNumber, Double balance) {
+
+        super(username, password, mobileNumber, balance);
     }
 
     public BankApi getBank(int id ) {
