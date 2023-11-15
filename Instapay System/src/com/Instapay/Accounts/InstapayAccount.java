@@ -27,6 +27,7 @@ public class InstapayAccount {
     // Constructors
 
     public  InstapayAccount(){
+        this.type = "*";
     }
 
     //----------------------------------------------------------------
@@ -81,7 +82,6 @@ public class InstapayAccount {
     //----------------------------------------------------------------
 
     public void register() {
-        String type;
         System.out.println("--------------------------------Register--------------------------------");
 
         // Select the type of the account.
@@ -90,12 +90,7 @@ public class InstapayAccount {
             System.out.println("Please Choose the type of your account :\n1.Bank Account.\n2.Wallet Account\n0.Exit");
             choice = scanner.nextInt();
         }
-        if (choice == 1){
-            type = "bank";
-        }
-        else {
-            type = "wallet";
-        }
+
         Database.displayApis(choice); // Display the banks or the wallets.
 
         // Select the name of the bank or wallet.
@@ -161,7 +156,7 @@ public class InstapayAccount {
             return;
         }
 
-        if (Database.verifyInstaMobileNumber(number, type)){
+        if (Database.verifyInstaMobileNumber(number, this.type)){
             System.out.println("There is already an account with this mobile number !!!");
             return;
         }
@@ -175,7 +170,7 @@ public class InstapayAccount {
         System.out.print("Enter a password : ");
         scanner.nextLine();
         password = scanner.nextLine();
-        String strongPasswordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";  // Regex of strong password.
+        String strongPasswordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$";  // Regex of strong password.
         while (!password.matches((strongPasswordRegex))){
             System.out.println("Please Enter a strong password : ");
             password = scanner.nextLine();
@@ -185,7 +180,6 @@ public class InstapayAccount {
         this.userName = username;
         this.password = password;
         this.mobileNumber = number;
-        this.type = type;
     }
 
     //----------------------------------------------------------------
