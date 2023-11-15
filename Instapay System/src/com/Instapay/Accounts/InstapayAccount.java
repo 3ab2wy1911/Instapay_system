@@ -238,6 +238,7 @@ public class InstapayAccount {
     public void transfer(){
         int choice = 0;
         String number, user;
+        number = user = "";
         while (choice < 1 || choice > 4){
             System.out.println("(1)Transfer to Bank Account \n(2) Transfer to a wallet\n(3) Transfer to Instapay Account \n(4) Exit");
             choice = scanner.nextInt();
@@ -266,6 +267,16 @@ public class InstapayAccount {
                 System.out.println("Account not found!!!");
                 return;
             }
+            // handling the case where you can't send to your own account
+            if (choice == 1 && instance.getUsername().equals(user)) {
+                System.out.println("That's your account");
+                return;
+            }
+            else if (choice == 2 &&  instance.getMobileNumber().equals(number)) {
+                System.out.println("That's your account");
+                return;
+            }
+
             System.out.println("Account found with username : " + instance.getUsername());
             System.out.print("Enter the amount of money you want to transfer : ");
             double amount = scanner.nextDouble();
@@ -335,8 +346,6 @@ public class InstapayAccount {
         System.out.println("Successfully transferred!!!");
 
     }
-
-
     //----------------------------------------------------------------
 
     public void payBill() {
