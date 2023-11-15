@@ -30,7 +30,13 @@ public class Database {
 
 
         banks = new BankApi[] {new CIB(), new QNB()};
-        wallets = new WalletApi[] {new TeldaWallet("Banque du Caire Wallet",1 ), new VodafoneCash("Vodafone Cash", 2), new Fawry("Fawry Wallet", 3)};
+        wallets = new WalletApi[]{new TeldaWallet("Banque du Caire Wallet", 1), new VodafoneCash("Vodafone Cash", 2), new Fawry("Fawry Wallet", 3)};
+        wallets[0].addAccount(new WalletAccount("mohamed", "123465", "01111111111", 1000.0, 3));
+        wallets[0].addAccount(new WalletAccount("sh3boo", "123465", "01222222222", 2000.0, 3));
+        wallets[1].addAccount(new WalletAccount("reyad", "123465", "03333333333", 1000.0, 2));
+        wallets[1].addAccount(new WalletAccount("omar", "123465", "04444444444", 1000.0, 2));
+        wallets[2].addAccount(new WalletAccount("temp1", "123465", "05555555555", 1000.0, 1));
+        wallets[2].addAccount(new WalletAccount("temp2", "123465", "06666666666", 1950.0, 1));
 
 //        dummy accounts added in instapayAccounts list
         instapayAccounts.add(new InstapayAccount("mohamedahmedriyad","reyad123456789","01157157114",60122));
@@ -185,5 +191,24 @@ public class Database {
         return false;
     }
     //----------------------------------------------------------------
-
+    public WalletAccount getAccountWithNumber(String mobileNumber){
+        for (int i = 0; i < 3; i++){
+            for (WalletAccount wacc : wallets[i].getAccounts()){
+                if (wacc.getMobileNumber().equals(mobileNumber)){
+                    return wacc;
+                }
+            }
+        }
+        return null;
+    }
+    //---------------------------------------------------------------
+    public void updateWalletAccount(WalletAccount acc){
+        for (int i = 0; i < 3; i++){
+            for (WalletAccount wacc : wallets[i].getAccounts()){
+                if (wacc.getMobileNumber().equals(acc.getMobileNumber())){
+                    wacc = acc;
+                }
+            }
+        }
+    }
 }
